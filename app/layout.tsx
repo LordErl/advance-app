@@ -1,25 +1,25 @@
 // app/layout.tsx
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import AppProviders from "@/providers/AppProviders";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import { Providers } from './providers';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "ITS ERP - Adiantamentos",
-  description: "Gestão de adiantamentos de viagem",
+  title: 'Advance App - Inteligência para sua gestão de adiantamentos',
+  description: 'Gestão moderna, análise inteligente e praticidade em um só lugar. Simplifique o gerenciamento de adiantamentos e despesas da sua empresa.',
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="pt-BR">
       <body className={inter.className}>
-        <AppProviders>{children}</AppProviders>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 30, 30, 30;
+  --background-rgb: 255, 255, 255;
+  --accent-blue: 25, 118, 210;
+  --accent-pink: 216, 27, 96;
+  --transition-speed: 0.3s;
+}
+
+.dark {
+  --foreground-rgb: 255, 255, 255;
+  --background-rgb: 0, 0, 0;
+  --accent-blue: 0, 207, 255;
+  --accent-purple: 142, 36, 170;
+}
+
+@layer base {
+  html {
+    @apply antialiased scroll-smooth;
+  }
+  
+  body {
+    @apply min-h-screen transition-colors duration-300;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    color: rgb(var(--foreground-rgb));
+    background-color: rgb(var(--background-rgb));
+  }
+  
+  body.light-theme {
+    @apply bg-light-glass bg-fixed;
+  }
+  
+  body.dark-theme {
+    @apply bg-dark-futuristic bg-fixed;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-medium tracking-tight transition-colors duration-300;
+  }
+  
+  .light-theme h1, .light-theme h2, .light-theme h3, .light-theme h4, .light-theme h5, .light-theme h6 {
+    @apply text-light-textPrimary;
+  }
+  
+  .dark-theme h1, .dark-theme h2, .dark-theme h3, .dark-theme h4, .dark-theme h5, .dark-theme h6 {
+    @apply text-dark-textPrimary;
+  }
+  
+  h1 {
+    @apply text-4xl md:text-5xl;
+  }
+  
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+  
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+  
+  p {
+    @apply leading-relaxed transition-colors duration-300;
+  }
+  
+  .light-theme p {
+    @apply text-light-textSecondary;
+  }
+  
+  .dark-theme p {
+    @apply text-dark-textSecondary;
+  }
+}
+
+@layer components {
+  /* Light Theme Components */
+  .card-light {
+    @apply glass bg-light-cardBg shadow-glass rounded-xl transition-all-300;
+  }
+  
+  .card-light:hover {
+    @apply shadow-glass-hover;
+  }
+  
+  /* Dark Theme Components */
+  .card-dark {
+    @apply glass-dark bg-dark-cardBg neon-border rounded-xl transition-all-300 neon-border-hover;
+  }
+  
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-all-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none;
+  }
+  
+  .btn-primary-light {
+    @apply bg-light-accentBlue text-white hover:bg-opacity-90 focus-visible:ring-light-accentBlue;
+  }
+  
+  .btn-secondary-light {
+    @apply bg-white bg-opacity-70 backdrop-blur-sm text-light-accentBlue border border-light-accentBlue border-opacity-20 hover:bg-opacity-100 focus-visible:ring-light-accentBlue;
+  }
+  
+  .btn-primary-dark {
+    @apply bg-gradient-to-r from-dark-accentBlue to-dark-accentPurple text-white hover:shadow-neon focus-visible:ring-dark-accentBlue;
+  }
+  
+  .btn-secondary-dark {
+    @apply bg-transparent text-white border border-dark-accentBlue neon-border hover:shadow-neon focus-visible:ring-dark-accentBlue;
+  }
+  
+  /* Navbar */
+  .navbar-light {
+    @apply glass bg-light-bgTranslucent backdrop-blur-md border-b border-white border-opacity-20;
+  }
+  
+  .navbar-dark {
+    @apply glass-dark bg-dark-cardBg backdrop-blur-md border-b border-dark-accentBlue border-opacity-20;
+  }
+  
+  /* Hero Section */
+  .hero-light {
+    @apply bg-light-glass;
+  }
+  
+  .hero-dark {
+    @apply bg-dark-futuristic;
+  }
+  
+  /* Feature Cards */
+  .feature-card-light {
+    @apply card-light p-6;
+  }
+  
+  .feature-card-dark {
+    @apply card-dark p-6;
+  }
+  
+  /* Call to Action */
+  .cta-light {
+    @apply bg-light-bgTranslucent backdrop-blur-md rounded-xl p-8 shadow-glass;
+  }
+  
+  .cta-dark {
+    @apply bg-dark-cardBg backdrop-blur-md rounded-xl p-8 neon-border;
+  }
+  
+  /* Footer */
+  .footer-light {
+    @apply bg-light-bgTranslucent backdrop-blur-md border-t border-white border-opacity-20;
+  }
+  
+  .footer-dark {
+    @apply bg-dark-cardBg backdrop-blur-md border-t border-dark-accentBlue border-opacity-20;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .text-glow {
+    text-shadow: 0 0 8px rgba(var(--accent-blue), 0.5);
+  }
+  
+  .text-glow-strong {
+    text-shadow: 0 0 12px rgba(var(--accent-blue), 0.8), 0 0 20px rgba(var(--accent-purple), 0.4);
+  }
+}
