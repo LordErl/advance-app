@@ -56,14 +56,14 @@ export default function ExpenseForm({ onSubmit, initialData = {}, isSubmitting =
       const numericAmount = amount.replace(/\D/g, '');
       const amountAsNumber = parseFloat(numericAmount) / 100;
       
-      let finalReceiptUrl = receiptUrl;
+      const finalReceiptUrl = receiptUrl;
       
       // Se tiver um novo arquivo de recibo, faria o upload aqui
       // e atualizaria a URL do recibo
       if (receiptFile) {
         // Simulação de upload - em um caso real, você faria o upload para um serviço como S3 ou Supabase Storage
         // finalReceiptUrl = await uploadReceipt(receiptFile);
-        console.log('Upload de recibo seria feito aqui');
+        // Upload logic would go here
       }
       
       onSubmit({

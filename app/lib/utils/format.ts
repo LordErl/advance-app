@@ -5,14 +5,17 @@
 /**
  * Formata um valor numérico para moeda brasileira (R$)
  * @param value Valor a ser formatado
+ * @param showSymbol Se deve mostrar o símbolo da moeda (R$)
  * @returns String formatada como moeda
  */
-export function formatCurrency(value: number | string): string {
+export function formatCurrency(value: number | string, showSymbol: boolean = true): string {
   const numValue = typeof value === 'string' ? parseFloat(value) : value;
   
   return new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
+    style: showSymbol ? 'currency' : 'decimal',
     currency: 'BRL',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   }).format(numValue);
 }
 
