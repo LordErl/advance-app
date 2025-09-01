@@ -11,6 +11,7 @@ interface ExpenseFormProps {
     category: string;
     date: string;
     receipt_url?: string;
+    notes?: string;
   }) => void;
   initialData?: {
     title?: string;
@@ -19,6 +20,8 @@ interface ExpenseFormProps {
     category?: string;
     date?: string;
     receipt_url?: string;
+    notes?: string;
+    advance_id?: string;
   };
   isSubmitting?: boolean;
 }
@@ -31,6 +34,7 @@ export default function ExpenseForm({ onSubmit, initialData = {}, isSubmitting =
   );
   const [category, setCategory] = useState(initialData.category || '');
   const [date, setDate] = useState(initialData.date || '');
+  const [notes, setNotes] = useState(initialData.notes || '');
   const [receiptFile, setReceiptFile] = useState<File | null>(null);
   const [receiptUrl, setReceiptUrl] = useState(initialData.receipt_url || '');
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -73,6 +77,7 @@ export default function ExpenseForm({ onSubmit, initialData = {}, isSubmitting =
         category,
         date,
         receipt_url: finalReceiptUrl,
+        notes,
       });
     }
   };
@@ -188,6 +193,19 @@ export default function ExpenseForm({ onSubmit, initialData = {}, isSubmitting =
           } px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm`}
         />
         {errors.date && <p className="mt-1 text-sm text-red-500">{errors.date}</p>}
+      </div>
+
+      <div>
+        <label htmlFor="notes" className="block text-sm font-medium text-gray-700">
+          Observações (opcional)
+        </label>
+        <textarea
+          id="notes"
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          rows={3}
+          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+        />
       </div>
 
       <div>
