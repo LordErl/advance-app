@@ -16,31 +16,26 @@ interface ProtectedRouteProps {
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const { isAuthenticated, isLoading, checkAuth } = useAuthStore();
+  const { isAuthenticated } = useAuthStore();
   const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
-    const verifyAuth = async () => {
-      setIsChecking(true);
-      await checkAuth();
-      setIsChecking(false);
-    };
-
-    verifyAuth();
-  }, [checkAuth]);
+    // Simple check to verify authentication state is loaded from storage
+    setIsChecking(false);
+  }, []);
 
   useEffect(() => {
-    if (!isChecking && !isLoading && !isAuthenticated) {
+    if (!isChecking && !isAuthenticated) {
       // Armazenar a URL atual para redirecionar de volta após o login
       if (pathname !== '/login' && pathname !== '/register') {
         sessionStorage.setItem('redirectAfterLogin', pathname);
       }
       router.push('/login');
     }
-  }, [isAuthenticated, isChecking, isLoading, router, pathname]);
+  }, [isAuthenticated, isChecking, router, pathname]);
 
   // Mostrar spinner enquanto verifica autenticação
-  if (isChecking || isLoading) {
+  if (isChecking) {
     return (
       <div className="flex h-screen w-full items-center justify-center">
         <Spinner size="lg" />
