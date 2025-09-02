@@ -7,7 +7,7 @@ import { useTheme } from '@/providers/ThemeProvider';
 interface GlassCardProps {
   children: ReactNode;
   className?: string;
-  variant?: 'default' | 'gradient' | 'neon' | 'minimal';
+  variant?: 'default' | 'gradient' | 'neon' | 'minimal' | 'glass';
   hover?: boolean;
   clickable?: boolean;
   onClick?: () => void;
@@ -40,6 +40,11 @@ export default function GlassCard({
         return isLight
           ? 'bg-white/50 border-gray-200/50 shadow-soft'
           : 'bg-dark-cardBg/40 border-gray-700/50 shadow-subtle';
+      
+      case 'glass':
+        return isLight
+          ? 'bg-white/70 border-white/20 shadow-glass backdrop-blur-xl'
+          : 'bg-dark-cardBg/70 border-dark-accentBlue/20 shadow-neon backdrop-blur-xl';
       
       default:
         return isLight

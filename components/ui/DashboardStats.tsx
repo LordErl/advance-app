@@ -8,8 +8,8 @@ import {
   ClockIcon, 
   CheckCircleIcon,
   ExclamationTriangleIcon,
-  TrendingUpIcon,
-  TrendingDownIcon
+  ArrowTrendingUpIcon,
+  ArrowTrendingDownIcon
 } from '@heroicons/react/24/outline';
 
 interface DashboardStatsProps {
@@ -58,7 +58,7 @@ export default function DashboardStats({ className = '' }: DashboardStatsProps) 
     {
       title: 'Taxa de Aprovação',
       value: '94.2%',
-      icon: <TrendingUpIcon className="w-6 h-6" />,
+      icon: <ArrowTrendingUpIcon className="w-6 h-6" />,
       trend: {
         value: 2.1,
         label: 'vs trimestre anterior',
@@ -238,7 +238,7 @@ export default function DashboardStats({ className = '' }: DashboardStatsProps) 
           `}
         >
           <div className="text-center">
-            <TrendingUpIcon className={`
+            <ArrowTrendingUpIcon className={`
               w-8 h-8 mx-auto mb-2
               ${isLight ? 'text-light-accentBlue' : 'text-dark-accentBlue'}
             `} />
