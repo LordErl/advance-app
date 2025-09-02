@@ -12,29 +12,56 @@
 
 @layer base {
   body {
-    @apply bg-background-light text-text-light dark:bg-background-dark dark:text-text-dark;
+    background-color: var(--background-light);
+    color: var(--text-light);
+  }
+
+  .dark body {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
   }
 }
 
 @layer utilities {
   .text-glow {
-    text-shadow: 0 0 5px theme('colors.dark-accent-primary'), 0 0 10px theme('colors.dark-accent-primary'), 0 0 20px theme('colors.dark-accent-secondary');
+    text-shadow:
+      0 0 5px theme('colors.primary.DEFAULT'),
+      0 0 10px theme('colors.primary.DEFAULT'),
+      0 0 20px theme('colors.primary.DEFAULT'),
+      0 0 40px theme('colors.primary.DEFAULT'),
+      0 0 80px theme('colors.primary.DEFAULT');
   }
 
-  .bg-aurora {
-    background-image: radial-gradient(ellipse 80% 50% at 50% -20%,rgba(120,119,198,0.3),hsla(0,0%,100%,0));
+  .neon-box {
+    box-shadow:
+      0 0 5px theme('colors.primary.DEFAULT'),
+      0 0 10px theme('colors.primary.DEFAULT'),
+      0 0 20px theme('colors.primary.DEFAULT'),
+      0 0 40px theme('colors.primary.DEFAULT');
   }
 
-  .dark .bg-aurora {
-    background-image: radial-gradient(ellipse 80% 50% at 50% -20%,rgba(120,119,198,0.3),rgba(255,255,255,0));
+  .glassmorphism {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
-}
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
-}
+  .dark .glassmorphism {
+    background: rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
 }

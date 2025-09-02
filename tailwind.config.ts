@@ -10,6 +10,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        'background-light': 'var(--background-light)',
+        'text-light': 'var(--text-light)',
+        'background-dark': 'var(--background-dark)',
+        'text-dark': 'var(--text-dark)',
+
         // Light Glass Theme
         'light-bg': '#F5F5F5', // Off-white
         'light-bg-gradient-start': '#E3F2FD',
