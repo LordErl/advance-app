@@ -75,11 +75,37 @@ const config: Config = {
         DEFAULT: {
           css: {
             maxWidth: '65ch',
-            color: '#334155',
+            color: 'hsl(var(--primary))',
             a: {
-              color: '#0284c7',
+              color: 'hsl(var(--primary))',
               '&:hover': {
-                color: '#0369a1',
+                color: 'hsl(var(--primary-dark))',
+              },
+            },
+          },
+        },
+        dark: {
+          DEFAULT: {
+            css: {
+              color: 'hsl(var(--primary-dark))',
+              a: {
+                color: 'hsl(var(--primary-dark))',
+                '&:hover': {
+                  color: 'hsl(var(--primary))',
+                },
+              },
+            },
+          },
+        },
+        foreground: {
+          DEFAULT: {
+            css: {
+              color: 'hsl(var(--primary-foreground))',
+              a: {
+                color: 'hsl(var(--primary-foreground))',
+                '&:hover': {
+                  color: 'hsl(var(--primary-foreground))',
+                },
               },
             },
           },
@@ -158,6 +184,9 @@ const config: Config = {
         },
         '.transition-all-300': {
           transition: 'all 0.3s ease',
+        },
+        '.text-outline-black': {
+          'text-shadow': '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000',
         },
       };
       

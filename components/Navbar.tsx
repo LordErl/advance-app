@@ -49,7 +49,7 @@ export default function Navbar() {
           >
             <Link
               href="/dashboard"
-              className="text-sm font-medium px-5 py-2.5 rounded-md bg-primary text-white hover:bg-primary-dark dark:bg-primary-dark dark:hover:bg-primary transition-colors"
+              className="text-sm font-medium px-5 py-2.5 rounded-md transition-colors bg-light-accent-primary text-white hover:bg-blue-700 dark:bg-dark-accent-primary dark:text-dark-text dark:hover:bg-cyan-400"
             >
               Dashboard
             </Link>

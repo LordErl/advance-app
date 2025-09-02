@@ -1,23 +1,45 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { useTheme } from '@/providers/ThemeProvider';
 import GlassCard from '@/components/ui/GlassCard';
 import NeonInput from '@/components/ui/NeonInput';
 import NeonButton from '@/components/ui/NeonButton';
 import { AtSymbolIcon, LockClosedIcon } from '@heroicons/react/24/outline';
+import { supabase } from '@/app/lib/supabase/client';
 
 export default function LoginForm() {
   const { theme } = useTheme();
   const isLight = theme === 'light';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Lógica de autenticação aqui
-    console.log({ email, password });
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        setError(error.message || 'Ocorreu um erro ao fazer login.');
+      } else {
+        router.push('/dashboard'); // Redireciona para o dashboard em caso de sucesso
+      }
+    } catch (err) {
+      setError('Falha na conexão. Tente novamente mais tarde.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -55,8 +77,15 @@ export default function LoginForm() {
             variant="neon"
             required
           />
-          <NeonButton type="submit" fullWidth variant="primary" size="lg">
-            Entrar
+
+          {error && (
+            <div className="text-red-500 text-sm text-center p-2 bg-red-500/10 rounded-md">
+              {error}
+            </div>
+          )}
+
+          <NeonButton type="submit" fullWidth variant="primary" size="lg" disabled={isLoading}>
+            {isLoading ? 'Entrando...' : 'Entrar'}
           </NeonButton>
         </form>
       </motion.div>
