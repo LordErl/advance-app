@@ -3,6 +3,8 @@
 import { useTheme } from '@/providers/ThemeProvider';
 import { motion } from 'framer-motion';
 import { ChartBarIcon, ClockIcon, CurrencyDollarIcon, DocumentTextIcon, LightBulbIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
+import GlassCard from '@/components/ui/GlassCard';
+import Image from 'next/image';
 
 const features = [
   {
@@ -95,14 +97,30 @@ export default function Features() {
           {features.map((feature, index) => (
             <motion.div 
               key={index}
-              className={`${isLight ? 'feature-card-light' : 'feature-card-dark'}`}
               variants={fadeIn}
             >
-              <div className={`h-12 w-12 rounded-xl flex items-center justify-center mb-4 ${isLight ? 'bg-light-accentBlue bg-opacity-10' : 'bg-dark-accentBlue bg-opacity-20'}`}>
-                <feature.icon className={`h-7 w-7 ${isLight ? 'text-light-accentBlue' : 'text-dark-accentBlue'}`} />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-              <p>{feature.description}</p>
+              <GlassCard 
+                variant="neon" 
+                className="p-6 h-full hover:scale-105 transition-transform duration-300"
+              >
+                <div className="flex items-center mb-4">
+                  <div className={`h-14 w-14 rounded-xl flex items-center justify-center mr-4 backdrop-blur-sm border ${
+                    isLight 
+                      ? 'bg-light-accentBlue/10 border-light-accentBlue/20' 
+                      : 'bg-dark-accentBlue/20 border-dark-accentBlue/30'
+                  }`}>
+                    <feature.icon className={`h-7 w-7 ${isLight ? 'text-light-accentBlue' : 'text-dark-accentBlue'}`} />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className={`text-xl font-semibold ${isLight ? 'text-light-textPrimary' : 'text-dark-textPrimary'}`}>
+                      {feature.title}
+                    </h3>
+                  </div>
+                </div>
+                <p className={`${isLight ? 'text-light-textSecondary' : 'text-dark-textSecondary'} leading-relaxed`}>
+                  {feature.description}
+                </p>
+              </GlassCard>
             </motion.div>
           ))}
         </motion.div>

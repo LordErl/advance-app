@@ -1,0 +1,42 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="profileGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF9800;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#FF5722;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E91E63;stop-opacity:1" />
+    </linearGradient>
+    <filter id="profileGlow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Outer ring with glow -->
+  <circle cx="32" cy="32" r="28" fill="none" stroke="url(#profileGradient)" stroke-width="2" opacity="0.3" filter="url(#profileGlow)"/>
+  <circle cx="32" cy="32" r="24" fill="url(#profileGradient)" opacity="0.1" filter="url(#profileGlow)"/>
+  
+  <!-- Avatar head -->
+  <circle cx="32" cy="24" r="8" fill="url(#profileGradient)" opacity="0.7" filter="url(#profileGlow)"/>
+  
+  <!-- Avatar body -->
+  <path d="M18 48 C18 40, 24 36, 32 36 C40 36, 46 40, 46 48" fill="url(#profileGradient)" opacity="0.7" filter="url(#profileGlow)"/>
+  
+  <!-- Status indicator -->
+  <circle cx="44" cy="20" r="4" fill="#4CAF50" opacity="0.9" filter="url(#profileGlow)">
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Decorative elements -->
+  <circle cx="12" cy="12" r="1.5" fill="#FF9800" opacity="0.8">
+    <animate attributeName="opacity" values="0.4;1;0.4" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="52" cy="52" r="1.5" fill="#E91E63" opacity="0.8">
+    <animate attributeName="opacity" values="1;0.4;1" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="8" cy="48" r="1" fill="#FF5722" opacity="0.8">
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="2.2s" repeatCount="indefinite"/>
+  </circle>
+</svg>

@@ -1,0 +1,44 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="settingsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#607D8B;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#455A64;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#37474F;stop-opacity:1" />
+    </linearGradient>
+    <filter id="settingsGlow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Gear outer ring -->
+  <path d="M32 8 L36 16 L44 14 L46 22 L54 26 L50 34 L56 40 L48 44 L50 52 L42 50 L36 56 L32 48 L28 56 L22 50 L14 52 L16 44 L8 40 L14 34 L10 26 L18 22 L20 14 L28 16 Z" 
+        fill="url(#settingsGradient)" opacity="0.2" filter="url(#settingsGlow)"/>
+  
+  <!-- Gear teeth -->
+  <path d="M32 12 L34 18 L38 17 L39 21 L43 23 L41 27 L45 30 L41 33 L43 37 L39 39 L38 43 L34 42 L32 48 L30 42 L26 43 L25 39 L21 37 L23 33 L19 30 L23 27 L21 23 L25 21 L26 17 L30 18 Z" 
+        fill="none" stroke="url(#settingsGradient)" stroke-width="2" opacity="0.8" filter="url(#settingsGlow)">
+    <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 32 32" to="360 32 32" dur="8s" repeatCount="indefinite"/>
+  </path>
+  
+  <!-- Inner gear -->
+  <circle cx="32" cy="32" r="8" fill="none" stroke="url(#settingsGradient)" stroke-width="2" opacity="0.9" filter="url(#settingsGlow)">
+    <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="360 32 32" to="0 32 32" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Center dot -->
+  <circle cx="32" cy="32" r="3" fill="url(#settingsGradient)" opacity="0.8" filter="url(#settingsGlow)"/>
+  
+  <!-- Accent lights -->
+  <circle cx="32" cy="20" r="1.5" fill="#00CFFF" opacity="0.8">
+    <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/>
+    <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 32 32" to="360 32 32" dur="8s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="44" cy="32" r="1.5" fill="#8E24AA" opacity="0.8">
+    <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite"/>
+    <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 32 32" to="360 32 32" dur="8s" repeatCount="indefinite"/>
+  </circle>
+</svg>

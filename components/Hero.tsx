@@ -5,6 +5,9 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { useTheme } from '@/providers/ThemeProvider';
 import { motion } from 'framer-motion';
 import { CurrencyDollarIcon, ClockIcon, ChartBarIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
+import GlassCard from '@/components/ui/GlassCard';
+import NeonButton from '@/components/ui/NeonButton';
 
 const features = [
   {
@@ -30,6 +33,17 @@ export default function Hero() {
   
   return (
     <section className={`relative overflow-hidden ${isLight ? 'hero-light' : 'hero-dark'} min-h-[90vh] flex items-center`}>
+      {/* Background illustration */}
+      <div className="absolute inset-0 overflow-hidden">
+        <Image
+          src="/images/illustrations/hero-bg.svg"
+          alt="Background"
+          fill
+          className="object-cover opacity-30"
+          priority
+        />
+      </div>
+      
       {/* Background decorative elements */}
       {isLight ? (
         <div className="absolute inset-0 overflow-hidden">
@@ -59,24 +73,19 @@ export default function Hero() {
           <p className="mt-6 text-lg max-w-md">
             Gestão moderna, análise inteligente e praticidade em um só lugar.
           </p>
-          <div className="mt-10 flex flex-col sm:flex-row gap-4">
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                href="/register"
-                className={`flex items-center justify-center px-8 py-3.5 rounded-lg text-base font-medium ${isLight ? 'btn-primary-light' : 'btn-primary-dark'}`}
-              >
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+            <Link href="/auth/login">
+              <NeonButton variant="primary" size="lg">
                 Começar Agora
-                <ArrowRightIcon className="ml-2 h-5 w-5" />
-              </Link>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                href="#funcionalidades"
-                className={`flex items-center justify-center px-8 py-3.5 rounded-lg text-base font-medium ${isLight ? 'btn-secondary-light' : 'btn-secondary-dark'}`}
-              >
+                <ArrowRightIcon className="ml-2 h-5 w-5 inline" />
+              </NeonButton>
+            </Link>
+            
+            <Link href="#features">
+              <NeonButton variant="ghost" size="lg">
                 Saiba Mais
-              </Link>
-            </motion.div>
+              </NeonButton>
+            </Link>
           </div>
         </motion.div>
         
@@ -87,30 +96,27 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <div className="relative mx-auto w-full max-w-md lg:max-w-xl">
-            <div className={`rounded-2xl overflow-hidden ${isLight ? 'card-light' : 'card-dark'}`}>
-              <div className={`p-1 ${isLight ? 'bg-gradient-to-r from-light-accentBlue to-light-accentPink' : 'bg-gradient-to-r from-dark-accentBlue to-dark-accentPurple'}`}></div>
-              <div className="p-6 sm:p-10">
-                <div className="space-y-6">
-                  {features.map((feature, index) => (
-                    <motion.div 
-                      key={index} 
-                      className="flex items-center"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 + (index * 0.1) }}
-                    >
-                      <div className={`h-10 w-10 rounded-full flex items-center justify-center ${isLight ? 'bg-light-accentBlue bg-opacity-10' : 'bg-dark-accentBlue bg-opacity-20'}`}>
-                        <feature.icon className={`h-6 w-6 ${isLight ? 'text-light-accentBlue' : 'text-dark-accentBlue'}`} />
-                      </div>
-                      <div className="ml-4">
-                        <h3 className="text-lg font-medium">{feature.title}</h3>
-                        <p className="mt-1 text-sm">{feature.description}</p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
+            <GlassCard variant="gradient" className="p-6 sm:p-10">
+              <div className="space-y-6">
+                {features.map((feature, index) => (
+                  <motion.div 
+                    key={index} 
+                    className="flex items-center"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 + (index * 0.1) }}
+                  >
+                    <div className={`h-12 w-12 rounded-xl flex items-center justify-center backdrop-blur-sm border ${isLight ? 'bg-light-accentBlue/10 border-light-accentBlue/20' : 'bg-dark-accentBlue/20 border-dark-accentBlue/30'}`}>
+                      <feature.icon className={`h-6 w-6 ${isLight ? 'text-light-accentBlue' : 'text-dark-accentBlue'}`} />
+                    </div>
+                    <div className="ml-4">
+                      <h3 className="text-lg font-semibold">{feature.title}</h3>
+                      <p className={`mt-1 text-sm ${isLight ? 'text-light-textSecondary' : 'text-dark-textSecondary'}`}>{feature.description}</p>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
-            </div>
+            </GlassCard>
           </div>
         </motion.div>
       </div>

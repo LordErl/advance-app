@@ -1,0 +1,81 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="heroGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00CFFF;stop-opacity:0.1" />
+      <stop offset="50%" style="stop-color:#1976D2;stop-opacity:0.05" />
+      <stop offset="100%" style="stop-color:#8E24AA;stop-opacity:0.1" />
+    </linearGradient>
+    <linearGradient id="heroGradient2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8E24AA;stop-opacity:0.08" />
+      <stop offset="100%" style="stop-color:#00CFFF;stop-opacity:0.08" />
+    </linearGradient>
+    <filter id="heroGlow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Animated background shapes -->
+  <circle cx="200" cy="150" r="120" fill="url(#heroGradient1)" filter="url(#heroGlow)">
+    <animate attributeName="r" values="100;140;100" dur="8s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.3;0.6;0.3" dur="8s" repeatCount="indefinite"/>
+  </circle>
+  
+  <circle cx="1000" cy="200" r="180" fill="url(#heroGradient2)" filter="url(#heroGlow)">
+    <animate attributeName="r" values="160;200;160" dur="10s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.2;0.5;0.2" dur="10s" repeatCount="indefinite"/>
+  </circle>
+  
+  <circle cx="300" cy="600" r="100" fill="url(#heroGradient1)" filter="url(#heroGlow)">
+    <animate attributeName="r" values="80;120;80" dur="6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.4;0.7;0.4" dur="6s" repeatCount="indefinite"/>
+  </circle>
+  
+  <circle cx="900" cy="650" r="150" fill="url(#heroGradient2)" filter="url(#heroGlow)">
+    <animate attributeName="r" values="130;170;130" dur="12s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.25;0.55;0.25" dur="12s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Floating geometric shapes -->
+  <polygon points="600,100 650,150 600,200 550,150" fill="#00CFFF" opacity="0.1" filter="url(#heroGlow)">
+    <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 600 150" to="360 600 150" dur="20s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.05;0.2;0.05" dur="4s" repeatCount="indefinite"/>
+  </polygon>
+  
+  <polygon points="100,400 150,450 100,500 50,450" fill="#8E24AA" opacity="0.1" filter="url(#heroGlow)">
+    <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="360 100 450" to="0 100 450" dur="15s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.1;0.25;0.1" dur="5s" repeatCount="indefinite"/>
+  </polygon>
+  
+  <!-- Flowing lines -->
+  <path d="M0 300 Q300 250 600 300 T1200 300" stroke="#00CFFF" stroke-width="2" fill="none" opacity="0.3">
+    <animate attributeName="opacity" values="0.1;0.4;0.1" dur="6s" repeatCount="indefinite"/>
+  </path>
+  
+  <path d="M0 500 Q400 450 800 500 T1200 500" stroke="#8E24AA" stroke-width="2" fill="none" opacity="0.3">
+    <animate attributeName="opacity" values="0.4;0.1;0.4" dur="8s" repeatCount="indefinite"/>
+  </path>
+  
+  <!-- Particle effects -->
+  <g opacity="0.6">
+    <circle cx="150" cy="300" r="2" fill="#00CFFF">
+      <animate attributeName="cy" values="300;100;300" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="450" cy="200" r="1.5" fill="#1976D2">
+      <animate attributeName="cy" values="200;400;200" dur="10s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="10s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="750" cy="350" r="2.5" fill="#8E24AA">
+      <animate attributeName="cy" values="350;150;350" dur="12s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.2;0.8;0.2" dur="12s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1050" cy="450" r="1.8" fill="#00CFFF">
+      <animate attributeName="cy" values="450;250;450" dur="9s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.4;1;0.4" dur="9s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+</svg>

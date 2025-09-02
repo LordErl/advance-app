@@ -1,0 +1,41 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="expenseGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B6B;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#FF8E53;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF6B9D;stop-opacity:1" />
+    </linearGradient>
+    <filter id="expenseGlow">
+      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Glass card background -->
+  <rect x="12" y="16" width="40" height="32" rx="6" fill="url(#expenseGradient)" opacity="0.1" filter="url(#expenseGlow)"/>
+  <rect x="12" y="16" width="40" height="32" rx="6" fill="none" stroke="url(#expenseGradient)" stroke-width="2" opacity="0.7"/>
+  
+  <!-- Receipt/expense lines -->
+  <line x1="18" y1="24" x2="46" y2="24" stroke="url(#expenseGradient)" stroke-width="1.5" opacity="0.6"/>
+  <line x1="18" y1="28" x2="38" y2="28" stroke="url(#expenseGradient)" stroke-width="1.5" opacity="0.6"/>
+  <line x1="18" y1="32" x2="42" y2="32" stroke="url(#expenseGradient)" stroke-width="1.5" opacity="0.6"/>
+  <line x1="18" y1="36" x2="35" y2="36" stroke="url(#expenseGradient)" stroke-width="1.5" opacity="0.6"/>
+  
+  <!-- Currency symbol -->
+  <circle cx="32" cy="40" r="4" fill="none" stroke="url(#expenseGradient)" stroke-width="2" filter="url(#expenseGlow)"/>
+  <text x="32" y="44" text-anchor="middle" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="url(#expenseGradient)">$</text>
+  
+  <!-- Animated sparkles -->
+  <circle cx="20" cy="12" r="1" fill="#FF6B6B" opacity="0.8">
+    <animate attributeName="opacity" values="0.3;1;0.3" dur="1.8s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="44" cy="52" r="1" fill="#FF8E53" opacity="0.8">
+    <animate attributeName="opacity" values="1;0.3;1" dur="1.8s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="8" cy="32" r="1" fill="#FF6B9D" opacity="0.8">
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="2.2s" repeatCount="indefinite"/>
+  </circle>
+</svg>
