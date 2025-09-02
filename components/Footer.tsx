@@ -1,10 +1,6 @@
-'use client';
-
 import Image from 'next/image';
-import Link from 'next/link';
-import { useTheme } from '@/providers/ThemeProvider';
 
-const footerLinks = {
+const navigation = {
   solutions: [
     { name: 'Adiantamentos', href: '#' },
     { name: 'Controle de Gastos', href: '#' },
@@ -21,11 +17,20 @@ const footerLinks = {
   ],
 };
 
-const socialLinks = [
+const social = [
+  {
+    name: 'Twitter',
+    href: '#',
+    icon: (props: any) => (
+      <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
+        <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.71v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+      </svg>
+    ),
+  },
   {
     name: 'GitHub',
     href: '#',
-    icon: (props: React.SVGProps<SVGSVGElement>) => (
+    icon: (props: any) => (
       <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
         <path
           fillRule="evenodd"
@@ -35,62 +40,56 @@ const socialLinks = [
       </svg>
     ),
   },
-  {
-    name: 'Twitter',
-    href: '#',
-    icon: (props: React.SVGProps<SVGSVGElement>) => (
-      <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
-        <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.71v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-      </svg>
-    ),
-  },
 ];
 
 export default function Footer() {
-  const { theme } = useTheme();
-  const isLight = theme === 'light';
-
   return (
-    <footer className={`${isLight ? 'bg-gray-50' : 'bg-dark-card'} border-t ${isLight ? 'border-gray-200' : 'border-dark-accent-primary/20'}`}>
-      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+    <footer className="bg-background-light dark:bg-background-dark border-t border-gray-200 dark:border-white/10" aria-labelledby="footer-heading">
+      <h2 id="footer-heading" className="sr-only">
+        Footer
+      </h2>
+      <div className="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
-          <div className="space-y-8 xl:col-span-1">
-            <Link href="/" className="flex items-center space-x-2">
-                <Image src="/logo.svg" alt="Advance App" width={120} height={32} className="h-8 w-auto" />
-                <span className={`text-xl font-bold ${isLight ? 'text-light-text-primary' : 'text-dark-text-primary'}`}>Advance</span>
-            </Link>
-            <p className={`text-sm ${isLight ? 'text-light-text-secondary' : 'text-dark-text-secondary'}`}>
+          <div className="space-y-8">
+            <Image
+              src="/images/logo.svg"
+              alt="Advance App Logo"
+              width={32}
+              height={32}
+              className="h-8 w-auto"
+            />
+            <p className="text-sm leading-6 text-text-secondary-light dark:text-text-secondary-dark">
               Inteligência para sua gestão de adiantamentos.
             </p>
             <div className="flex space-x-6">
-              {socialLinks.map((item) => (
-                <a key={item.name} href={item.href} className={`${isLight ? 'text-light-textSecondary hover:text-light-textPrimary' : 'text-dark-textSecondary hover:text-white'} transition-colors duration-300`}>
+              {social.map((item) => (
+                <a key={item.name} href={item.href} className="text-gray-400 hover:text-gray-500">
                   <span className="sr-only">{item.name}</span>
                   <item.icon className="h-6 w-6" aria-hidden="true" />
                 </a>
               ))}
             </div>
           </div>
-          <div className="mt-12 grid grid-cols-2 gap-8 xl:mt-0 xl:col-span-2">
+          <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
-                <h3 className={`text-sm font-semibold tracking-wider uppercase ${isLight ? 'text-gray-500' : 'text-gray-400'}`}>Soluções</h3>
-                <ul role="list" className="mt-4 space-y-4">
-                  {footerLinks.solutions.map((item) => (
+                <h3 className="text-sm font-semibold leading-6 text-text-light dark:text-text-dark">Soluções</h3>
+                <ul role="list" className="mt-6 space-y-4">
+                  {navigation.solutions.map((item) => (
                     <li key={item.name}>
-                      <a href={item.href} className={`text-base ${isLight ? 'text-light-text-secondary hover:text-light-text-primary' : 'text-dark-text-secondary hover:text-white'}`}>
+                      <a href={item.href} className="text-sm leading-6 text-text-secondary-light hover:text-text-light dark:text-text-secondary-dark dark:hover:text-text-dark">
                         {item.name}
                       </a>
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="mt-12 md:mt-0">
-                <h3 className={`text-sm font-semibold tracking-wider uppercase ${isLight ? 'text-gray-500' : 'text-gray-400'}`}>Empresa</h3>
-                <ul role="list" className="mt-4 space-y-4">
-                  {footerLinks.company.map((item) => (
+              <div className="mt-10 md:mt-0">
+                <h3 className="text-sm font-semibold leading-6 text-text-light dark:text-text-dark">Empresa</h3>
+                <ul role="list" className="mt-6 space-y-4">
+                  {navigation.company.map((item) => (
                     <li key={item.name}>
-                      <a href={item.href} className={`text-base ${isLight ? 'text-light-text-secondary hover:text-light-text-primary' : 'text-dark-text-secondary hover:text-white'}`}>
+                      <a href={item.href} className="text-sm leading-6 text-text-secondary-light hover:text-text-light dark:text-text-secondary-dark dark:hover:text-text-dark">
                         {item.name}
                       </a>
                     </li>
@@ -100,11 +99,11 @@ export default function Footer() {
             </div>
             <div className="md:grid md:grid-cols-1 md:gap-8">
               <div>
-                <h3 className={`text-sm font-semibold tracking-wider uppercase ${isLight ? 'text-gray-500' : 'text-gray-400'}`}>Legal</h3>
-                <ul role="list" className="mt-4 space-y-4">
-                  {footerLinks.legal.map((item) => (
+                <h3 className="text-sm font-semibold leading-6 text-text-light dark:text-text-dark">Legal</h3>
+                <ul role="list" className="mt-6 space-y-4">
+                  {navigation.legal.map((item) => (
                     <li key={item.name}>
-                      <a href={item.href} className={`text-base ${isLight ? 'text-light-text-secondary hover:text-light-text-primary' : 'text-dark-text-secondary hover:text-white'}`}>
+                      <a href={item.href} className="text-sm leading-6 text-text-secondary-light hover:text-text-light dark:text-text-secondary-dark dark:hover:text-text-dark">
                         {item.name}
                       </a>
                     </li>
@@ -114,10 +113,8 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className={`mt-12 border-t pt-8 ${isLight ? 'border-gray-200' : 'border-dark-accent-primary/20'}`}>
-          <p className={`text-base text-center ${isLight ? 'text-light-text-secondary' : 'text-dark-text-secondary'}`}>
-            &copy; {new Date().getFullYear()} Advance App. Todos os direitos reservados.
-          </p>
+        <div className="mt-16 border-t border-gray-200 dark:border-white/10 pt-8 sm:mt-20 lg:mt-24">
+          <p className="text-xs leading-5 text-text-secondary-light dark:text-text-secondary-dark">&copy; {new Date().getFullYear()} Advance App. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>

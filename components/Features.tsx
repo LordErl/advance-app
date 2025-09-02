@@ -1,127 +1,54 @@
-'use client';
-
-import { useTheme } from '@/providers/ThemeProvider';
-import { motion } from 'framer-motion';
-import { ChartBarIcon, ClockIcon, CurrencyDollarIcon, DocumentTextIcon, LightBulbIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
-import GlassCard from '@/components/ui/GlassCard';
 import Image from 'next/image';
 
 const features = [
   {
-    title: 'Controle financeiro completo',
-    description: 'Gerencie adiantamentos e despesas em um só lugar com facilidade',
-    icon: CurrencyDollarIcon,
+    name: 'Analytics Detalhados',
+    description: 'Tome decisões mais inteligentes com acesso a dashboards e relatórios completos sobre seus gastos.',
+    icon: '/images/icon-analytics.svg',
   },
   {
-    title: 'Fluxo de aprovação inteligente',
-    description: 'Automatize processos e reduza erros com fluxos personalizáveis',
-    icon: ClockIcon,
+    name: 'Transações Simplificadas',
+    description: 'Gerencie seus adiantamentos e despesas de forma rápida e intuitiva, sem complicações.',
+    icon: '/images/icon-transactions.svg',
   },
   {
-    title: 'Relatórios detalhados',
-    description: 'Visualize dados e tome decisões informadas com dashboards avançados',
-    icon: ChartBarIcon,
-  },
-  {
-    title: 'Segurança em primeiro lugar',
-    description: 'Seus dados protegidos com as mais avançadas tecnologias de segurança',
-    icon: ShieldCheckIcon,
-  },
-  {
-    title: 'Documentação digital',
-    description: 'Armazene e organize todos os comprovantes e documentos fiscais',
-    icon: DocumentTextIcon,
-  },
-  {
-    title: 'Análise preditiva',
-    description: 'Antecipe tendências e otimize seu fluxo de caixa com IA',
-    icon: LightBulbIcon,
+    name: 'Relatórios Automatizados',
+    description: 'Gere relatórios de despesas automaticamente e economize tempo para focar no que realmente importa.',
+    icon: '/images/icon-reports.svg',
   },
 ];
 
-// Animation variants
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: { duration: 0.6 }
-  }
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2
-    }
-  }
-};
-
 export default function Features() {
-  const { theme } = useTheme();
-  const isLight = theme === 'light';
-  
   return (
-    <section id="funcionalidades" className="py-24 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <motion.h2 
-            className={`text-3xl font-bold ${isLight ? 'text-light-textPrimary' : 'text-dark-textPrimary text-glow'}`}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            Funcionalidades Poderosas
-          </motion.h2>
-          <motion.p 
-            className="mt-4 max-w-2xl mx-auto text-lg"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            Tudo o que você precisa para uma gestão eficiente de adiantamentos
-          </motion.p>
+    <div className="bg-background-light dark:bg-background-dark py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl lg:text-center">
+          <h2 className="text-base font-semibold leading-7 text-primary">
+            Tudo sob controle
+          </h2>
+          <p className="mt-2 text-3xl font-bold tracking-tight text-text-light dark:text-text-dark sm:text-4xl">
+            Uma plataforma completa para sua gestão financeira
+          </p>
+          <p className="mt-6 text-lg leading-8 text-text-secondary-light dark:text-text-secondary-dark">
+            Do adiantamento à prestação de contas, o Advance simplifica cada etapa do processo para você e sua equipe.
+          </p>
         </div>
-
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {features.map((feature, index) => (
-            <motion.div 
-              key={index}
-              variants={fadeIn}
-            >
-              <GlassCard className="p-6 h-full">
-                <div className="flex items-center mb-4">
-                  <div className={`h-14 w-14 rounded-xl flex items-center justify-center mr-4 backdrop-blur-sm border ${
-                    isLight 
-                      ? 'bg-light-accent-primary/10 border-light-accent-primary/20' 
-                      : 'bg-dark-accent-primary/20 border-dark-accent-primary/30'
-                  }`}>
-                    <feature.icon className={`h-7 w-7 ${isLight ? 'text-light-accent-primary' : 'text-dark-accent-primary'}`} />
+        <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
+          <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-3 lg:gap-y-16">
+            {features.map((feature) => (
+              <div key={feature.name} className="relative pl-16">
+                <dt className="text-base font-semibold leading-7 text-text-light dark:text-text-dark">
+                  <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
+                    <Image src={feature.icon} alt={`${feature.name} icon`} width={24} height={24} />
                   </div>
-                  <div className="flex-1">
-                    <h3 className={`text-xl font-semibold ${isLight ? 'text-light-text-primary' : 'text-dark-text-primary'}`}>
-                      {feature.title}
-                    </h3>
-                  </div>
-                </div>
-                <p className={`${isLight ? 'text-light-text-secondary' : 'text-dark-text-secondary'} leading-relaxed`}>
-                  {feature.description}
-                </p>
-              </GlassCard>
-            </motion.div>
-          ))}
-        </motion.div>
+                  {feature.name}
+                </dt>
+                <dd className="mt-2 text-base leading-7 text-text-secondary-light dark:text-text-secondary-dark">{feature.description}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       </div>
-    </section>
+    </div>
   );
 }
