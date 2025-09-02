@@ -74,7 +74,7 @@ export default function DemoPage() {
         
         <ModalFooter>
           <NeonButton 
-            variant="ghost" 
+            variant="secondary" 
             onClick={() => setIsModalOpen(false)}
           >
             Cancelar
@@ -123,96 +123,74 @@ export default function DemoPage() {
           <DashboardStats />
         </motion.div>
 
-        {/* Components Demo Grid */}
+        {/* Components Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           {/* Buttons Demo */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <GlassCard variant="glass" className="p-6">
+            <GlassCard className="p-6">
               <h3 className={`
                 text-xl font-semibold mb-4
                 ${isLight ? 'text-light-textPrimary' : 'text-dark-textPrimary'}
               `}>
-                Botões Neon
+                Botões
               </h3>
-              
-              <div className="space-y-4">
-                <div className="flex flex-wrap gap-3">
-                  <NeonButton variant="primary" size="sm">
-                    Primário
-                  </NeonButton>
-                  <NeonButton variant="secondary" size="sm">
-                    Secundário
-                  </NeonButton>
-                  <NeonButton variant="success" size="sm">
-                    Sucesso
-                  </NeonButton>
-                  <NeonButton variant="warning" size="sm">
-                    Aviso
-                  </NeonButton>
-                  <NeonButton variant="danger" size="sm">
-                    Perigo
-                  </NeonButton>
-                  <NeonButton variant="ghost" size="sm">
-                    Ghost
-                  </NeonButton>
-                </div>
-                
-                <div className="flex gap-3">
-                  <NeonButton variant="primary" size="md" loading>
-                    Carregando...
-                  </NeonButton>
-                  <NeonButton variant="primary" size="md" disabled>
-                    Desabilitado
-                  </NeonButton>
-                </div>
+              <div className="flex flex-wrap gap-3">
+                <NeonButton variant="primary" size="sm">
+                  Primário
+                </NeonButton>
+                <NeonButton variant="secondary" size="sm">
+                  Secundário
+                </NeonButton>
+                <NeonButton variant="primary" size="sm">
+                  Sucesso
+                </NeonButton>
+                <NeonButton variant="secondary" size="sm">
+                  Aviso
+                </NeonButton>
+                <NeonButton variant="primary" size="sm">
+                  Perigo
+                </NeonButton>
+                <NeonButton variant="secondary" size="sm">
+                  Ghost
+                </NeonButton>
               </div>
             </GlassCard>
           </motion.div>
 
           {/* Inputs Demo */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4 }}
           >
-            <GlassCard variant="glass" className="p-6">
+            <GlassCard className="p-6">
               <h3 className={`
                 text-xl font-semibold mb-4
                 ${isLight ? 'text-light-textPrimary' : 'text-dark-textPrimary'}
               `}>
-                Inputs Modernos
+                Inputs
               </h3>
-              
               <div className="space-y-4">
-                <NeonInput
-                  label="Input Padrão"
+                <NeonInput 
+                  label="Padrão"
                   placeholder="Digite aqui..."
                   variant="default"
                 />
-                
-                <NeonInput
-                  label="Input Glass"
-                  placeholder="Efeito glassmorphism..."
-                  variant="glass"
+                <NeonInput 
+                  label="Neon"
+                  placeholder="Com efeito neon..."
+                  variant="neon"
                   leftIcon={<UserIcon className="w-5 h-5" />}
                 />
-                
-                <NeonInput
-                  label="Input Neon"
-                  placeholder="Com efeitos neon..."
-                  variant="neon"
-                  rightIcon={<EyeIcon className="w-5 h-5" />}
-                />
-                
-                <NeonInput
+                <NeonInput 
                   label="Senha"
-                  type="password"
                   placeholder="Sua senha..."
-                  variant="neon"
+                  type="password"
+                  variant="glass"
                 />
               </div>
             </GlassCard>
@@ -225,7 +203,7 @@ export default function DemoPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
         >
-          <GlassCard variant="gradient" className="p-8">
+          <GlassCard className="p-8">
             <h3 className={`
               text-2xl font-semibold mb-6 text-center
               ${isLight ? 'text-light-textPrimary' : 'text-dark-textPrimary'}
@@ -260,7 +238,7 @@ export default function DemoPage() {
                 </h4>
                 <div className="space-y-2">
                   <NeonButton 
-                    variant="success" 
+                    variant="primary" 
                     size="sm" 
                     fullWidth
                     onClick={() => handleToastDemo('success')}
@@ -268,7 +246,7 @@ export default function DemoPage() {
                     Sucesso
                   </NeonButton>
                   <NeonButton 
-                    variant="danger" 
+                    variant="primary" 
                     size="sm" 
                     fullWidth
                     onClick={() => handleToastDemo('error')}
@@ -306,7 +284,7 @@ export default function DemoPage() {
                 </h4>
                 <div className="space-y-2">
                   <NeonButton 
-                    variant="warning" 
+                    variant="secondary" 
                     size="sm" 
                     fullWidth
                     onClick={() => handleToastDemo('warning')}

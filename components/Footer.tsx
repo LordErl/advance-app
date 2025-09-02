@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useTheme } from '@/providers/ThemeProvider';
 
@@ -37,7 +38,7 @@ export default function Footer() {
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8 xl:col-span-1">
             <Link href="/" className="flex items-center space-x-2">
-                <img className="h-8 w-auto" src="/logo.svg" alt="Advance App" />
+                <Image src="/logo.svg" alt="Advance App" width={120} height={32} className="h-8 w-auto" />
                 <span className={`text-xl font-bold ${isLight ? 'text-light-text-primary' : 'text-dark-text-primary'}`}>Advance</span>
             </Link>
             <p className={`text-sm ${isLight ? 'text-light-text-secondary' : 'text-dark-text-secondary'}`}>
