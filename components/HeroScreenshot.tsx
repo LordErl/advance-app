@@ -2,7 +2,7 @@ import React from 'react';
 
 const HeroScreenshot = () => {
   return (
-    <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+    <div className="-m-2 rounded-xl p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4 bg-white/30 dark:bg-black/30 backdrop-blur-sm">
       <div className="aspect-[3/2] w-full rounded-md bg-white shadow-2xl ring-1 ring-gray-900/10">
         {/* Header da janela */}
         <div className="flex items-center gap-2 px-4 py-2.5 border-b border-gray-200">
