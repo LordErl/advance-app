@@ -31,7 +31,11 @@ export default function LoginForm() {
       });
 
       if (error) {
-        setError(error.message || 'Ocorreu um erro ao fazer login.');
+        if (error.message === 'Email not confirmed') {
+          setError('Você recebeu um email solicitando sua confirmação, por favor verifique seu email e confirme.');
+        } else {
+          setError(error.message || 'Ocorreu um erro ao fazer login.');
+        }
       } else {
         router.push('/dashboard'); // Redireciona para o dashboard em caso de sucesso
       }
