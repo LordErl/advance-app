@@ -4,17 +4,17 @@ const features = [
   {
     name: 'Analytics Detalhados',
     description: 'Tome decisões mais inteligentes com acesso a dashboards e relatórios completos sobre seus gastos.',
-    icon: '/images/icon-analytics.svg',
+    icon: '/images/icons/analytics-icon.svg',
   },
   {
     name: 'Transações Simplificadas',
     description: 'Gerencie seus adiantamentos e despesas de forma rápida e intuitiva, sem complicações.',
-    icon: '/images/icon-transactions.svg',
+    icon: '/images/icons/expense-icon.svg', // Assumindo que este é o ícone correto para transações
   },
   {
     name: 'Relatórios Automatizados',
     description: 'Gere relatórios de despesas automaticamente e economize tempo para focar no que realmente importa.',
-    icon: '/images/icon-reports.svg',
+    icon: '/images/icons/dashboard-icon.svg', // Assumindo que este é o ícone correto para relatórios
   },
 ];
 
