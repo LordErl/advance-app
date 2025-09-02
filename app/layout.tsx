@@ -3,8 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Providers } from './providers';
-import MobileNavigation from '@/components/ui/MobileNavigation';
-import Navbar from '@/components/ui/Navbar';
+
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,12 +21,8 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className={inter.className}>
         <Providers>
-          <div className="relative min-h-screen">
-            <Navbar />
-            <main className="pb-20 pt-20 md:pb-0">
-              {children}
-            </main>
-            <MobileNavigation />
+          <div className="min-h-screen bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
+            {children}
           </div>
         </Providers>
       </body>
