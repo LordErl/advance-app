@@ -1,16 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import { useTheme } from '@/providers/ThemeProvider';
-import ThemeToggle from './ThemeToggle';
+import { useTheme } from 'next-themes';
+import { ThemeSwitcher } from './ThemeSwitcher';
 import { motion } from 'framer-motion';
 
 export default function Navbar() {
   const { theme } = useTheme();
-  const isLight = theme === 'light';
   
   return (
-    <header className={`fixed w-full z-50 ${isLight ? 'navbar-light' : 'navbar-dark'}`}>
+    <header className="fixed w-full z-50 bg-white/80 dark:bg-black/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         <motion.div 
           className="flex items-center"
@@ -19,8 +18,8 @@ export default function Navbar() {
           transition={{ duration: 0.5 }}
         >
           <Link href="/">
-            <h1 className={`text-2xl font-light tracking-tight ${isLight ? 'text-light-textPrimary' : 'text-dark-textPrimary text-glow'}`}>
-              Advance<span className={`font-bold ${isLight ? 'text-light-accentBlue' : 'text-dark-accentBlue text-glow-strong'}`}>App</span>
+            <h1 className="text-2xl font-light tracking-tight text-text-primary-light dark:text-text-primary-dark">
+              Advance<span className="font-bold text-primary dark:text-primary-dark">App</span>
             </h1>
           </Link>
         </motion.div>
@@ -35,7 +34,7 @@ export default function Navbar() {
             >
               <Link 
                 href={`#${item.toLowerCase()}`} 
-                className={`text-sm font-medium transition-all-300 ${isLight ? 'text-light-textSecondary hover:text-light-accentBlue' : 'text-dark-textSecondary hover:text-dark-accentBlue hover:text-glow'}`}
+                className="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark transition-colors hover:text-primary dark:hover:text-primary-dark"
               >
                 {item}
               </Link>
@@ -50,7 +49,7 @@ export default function Navbar() {
           >
             <Link
               href="/dashboard"
-              className={`text-sm font-medium px-5 py-2.5 rounded-md transition-all-300 ${isLight ? 'btn-primary-light' : 'btn-primary-dark'}`}
+              className="text-sm font-medium px-5 py-2.5 rounded-md bg-primary text-white hover:bg-primary-dark dark:bg-primary-dark dark:hover:bg-primary transition-colors"
             >
               Dashboard
             </Link>
@@ -58,9 +57,9 @@ export default function Navbar() {
         </nav>
         
         <div className="flex items-center space-x-4">
-          <ThemeToggle />
-          <button className="md:hidden">
-            <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 ${isLight ? 'text-light-textPrimary' : 'text-dark-textPrimary'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <ThemeSwitcher />
+          <button className="md:hidden text-text-primary-light dark:text-text-primary-dark">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
             </svg>
           </button>

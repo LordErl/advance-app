@@ -2,6 +2,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from '@/components/ThemeProvider';
+import Navbar from '@/components/Navbar'; // Importa a Navbar
 import './globals.css';
 import { Providers } from './providers';
 
@@ -23,9 +24,8 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <div className="min-h-screen bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
-              {children}
-            </div>
+                        <Navbar />
+            {children}
           </ThemeProvider>
         </Providers>
       </body>

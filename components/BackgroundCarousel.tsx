@@ -39,7 +39,7 @@ const BackgroundCarousel = () => {
               className="opacity-30 dark:opacity-40 transition-opacity duration-1000"
               priority={index === 0}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background-light via-background-light/70 to-transparent dark:from-background-dark dark:via-background-dark/80" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background-light via-background-light/50 to-transparent dark:from-background-dark dark:via-background-dark/60" />
           </div>
         ))}
       </div>
