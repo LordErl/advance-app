@@ -1,6 +1,7 @@
 // app/layout.tsx
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { ThemeProvider } from '@/components/ThemeProvider';
 import './globals.css';
 import { Providers } from './providers';
 
@@ -21,9 +22,11 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className={inter.className}>
         <Providers>
-          <div className="min-h-screen bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
-            {children}
-          </div>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <div className="min-h-screen bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
+              {children}
+            </div>
+          </ThemeProvider>
         </Providers>
       </body>
     </html>
