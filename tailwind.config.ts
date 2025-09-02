@@ -11,56 +11,33 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Light Glass Theme Colors
-        light: {
-          bg: '#FFFFFF',
-          bgTranslucent: 'rgba(255, 255, 255, 0.7)',
-          cardBg: 'rgba(255, 255, 255, 0.8)',
-          gradientStart: '#E3F2FD',
-          gradientEnd: '#FCE4EC',
-          textPrimary: '#1E1E1E',
-          textSecondary: '#555555',
-          accentBlue: '#1976D2',
-          accentPink: '#D81B60',
-        },
-        // Dark Futuristic Theme Colors
-        dark: {
-          bg: '#000000',
-          cardBg: 'rgba(30, 30, 30, 0.6)',
-          gradientBlue: '#00CFFF',
-          gradientPurple: '#8E24AA',
-          textPrimary: '#FFFFFF',
-          textSecondary: '#AAAAAA',
-          accentBlue: '#00CFFF',
-          accentPurple: '#8E24AA',
-        },
-        // Original colors preserved
-        blue: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
-          950: '#082f49',
-        },
-        slate: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#334155',
-          800: '#1e293b',
-          900: '#0f172a',
-          950: '#020617',
-        },
+        // Light Glass Theme
+        'light-bg': '#F5F5F5', // Off-white
+        'light-bg-gradient-start': '#E3F2FD',
+        'light-bg-gradient-end': '#FCE4EC',
+        'light-card': 'rgba(255, 255, 255, 0.7)',
+        'light-text-primary': '#1E1E1E',
+        'light-text-secondary': '#555555',
+        'light-accent-primary': '#1976D2', // Blue
+        'light-accent-secondary': '#D81B60', // Pink
+
+        // Dark Futurista Theme
+        'dark-bg': '#000000',
+        'dark-card': 'rgba(30, 30, 30, 0.6)',
+        'dark-text-primary': '#FFFFFF',
+        'dark-text-secondary': '#AAAAAA',
+        'dark-accent-primary': '#00CFFF', // Cyan
+        'dark-accent-secondary': '#8E24AA', // Purple
+
+        // Fintech Mobile Theme (Light)
+        'fintech-light-bg': '#F5F5F5',
+        'fintech-light-accent': '#4A90E2',
+
+        // Fintech Mobile Theme (Dark)
+        'fintech-dark-bg': '#121212',
+        'fintech-dark-card': '#1E1E1E',
+        'fintech-dark-accent': '#A2C0FF',
+        'fintech-dark-text': '#E0E0E0',
       },
       backgroundImage: {
         // Original gradients
@@ -81,10 +58,9 @@ const config: Config = {
         'elevated': '0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02)',
         
         // New theme shadows
-        'glass': '0 8px 32px rgba(0, 0, 0, 0.1)',
-        'glass-hover': '0 12px 40px rgba(0, 0, 0, 0.15)',
-        'neon': '0 0 5px rgba(0, 207, 255, 0.5)',
-        'neon-hover': '0 0 15px rgba(0, 207, 255, 0.8), 0 0 30px rgba(142, 36, 170, 0.3)',
+        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.1)',
+        'neon-glow-primary': '0 0 3px theme(colors.dark-accent-primary), 0 0 6px theme(colors.dark-accent-primary), 0 0 9px theme(colors.dark-accent-primary)',
+        'neon-glow-secondary': '0 0 3px theme(colors.dark-accent-secondary), 0 0 6px theme(colors.dark-accent-secondary), 0 0 9px theme(colors.dark-accent-secondary)',
       },
       borderRadius: {
         'xl': '0.75rem',

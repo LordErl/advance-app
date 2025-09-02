@@ -99,25 +99,22 @@ export default function Features() {
               key={index}
               variants={fadeIn}
             >
-              <GlassCard 
-                variant="neon" 
-                className="p-6 h-full hover:scale-105 transition-transform duration-300"
-              >
+              <GlassCard className="p-6 h-full">
                 <div className="flex items-center mb-4">
                   <div className={`h-14 w-14 rounded-xl flex items-center justify-center mr-4 backdrop-blur-sm border ${
                     isLight 
-                      ? 'bg-light-accentBlue/10 border-light-accentBlue/20' 
-                      : 'bg-dark-accentBlue/20 border-dark-accentBlue/30'
+                      ? 'bg-light-accent-primary/10 border-light-accent-primary/20' 
+                      : 'bg-dark-accent-primary/20 border-dark-accent-primary/30'
                   }`}>
-                    <feature.icon className={`h-7 w-7 ${isLight ? 'text-light-accentBlue' : 'text-dark-accentBlue'}`} />
+                    <feature.icon className={`h-7 w-7 ${isLight ? 'text-light-accent-primary' : 'text-dark-accent-primary'}`} />
                   </div>
                   <div className="flex-1">
-                    <h3 className={`text-xl font-semibold ${isLight ? 'text-light-textPrimary' : 'text-dark-textPrimary'}`}>
+                    <h3 className={`text-xl font-semibold ${isLight ? 'text-light-text-primary' : 'text-dark-text-primary'}`}>
                       {feature.title}
                     </h3>
                   </div>
                 </div>
-                <p className={`${isLight ? 'text-light-textSecondary' : 'text-dark-textSecondary'} leading-relaxed`}>
+                <p className={`${isLight ? 'text-light-text-secondary' : 'text-dark-text-secondary'} leading-relaxed`}>
                   {feature.description}
                 </p>
               </GlassCard>

@@ -4,7 +4,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Providers } from './providers';
 import MobileNavigation from '@/components/ui/MobileNavigation';
-import MobileHeader from '@/components/ui/MobileHeader';
+import Navbar from '@/components/ui/Navbar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,8 +23,8 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <div className="relative min-h-screen">
-            <MobileHeader />
-            <main className="pb-20 pt-16 md:pb-0 md:pt-0">
+            <Navbar />
+            <main className="pb-20 pt-20 md:pb-0">
               {children}
             </main>
             <MobileNavigation />

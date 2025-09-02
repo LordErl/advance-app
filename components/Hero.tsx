@@ -47,13 +47,13 @@ export default function Hero() {
       {/* Background decorative elements */}
       {isLight ? (
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-96 h-96 bg-light-gradientStart rounded-full opacity-20 blur-3xl"></div>
-          <div className="absolute top-1/3 -left-20 w-72 h-72 bg-light-gradientEnd rounded-full opacity-20 blur-3xl"></div>
+          <div className="absolute -top-40 -right-40 w-96 h-96 bg-light-accent-primary rounded-full opacity-20 blur-3xl"></div>
+          <div className="absolute top-1/3 -left-20 w-72 h-72 bg-light-accent-secondary rounded-full opacity-20 blur-3xl"></div>
         </div>
       ) : (
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-96 h-96 bg-dark-gradientBlue rounded-full opacity-10 blur-3xl animate-pulse-glow"></div>
-          <div className="absolute top-1/3 -left-20 w-72 h-72 bg-dark-gradientPurple rounded-full opacity-10 blur-3xl animate-pulse-glow"></div>
+          <div className="absolute -top-40 -right-40 w-96 h-96 bg-dark-accent-primary rounded-full opacity-10 blur-3xl animate-pulse-glow"></div>
+          <div className="absolute top-1/3 -left-20 w-72 h-72 bg-dark-accent-secondary rounded-full opacity-10 blur-3xl animate-pulse-glow"></div>
         </div>
       )}
       
@@ -66,23 +66,23 @@ export default function Hero() {
         >
           <h1 className={`text-4xl font-light tracking-tight sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl ${isLight ? '' : 'text-glow'}`}>
             <span className="block">Advance App —</span>
-            <span className={`block font-bold mt-2 ${isLight ? 'text-light-accentBlue' : 'text-dark-accentBlue text-glow-strong'}`}>
+            <span className={`block font-bold mt-2 ${isLight ? 'text-light-accent-primary' : 'text-dark-accent-primary text-glow-strong'}`}>
               Inteligência para sua gestão de adiantamentos
             </span>
           </h1>
           <p className="mt-6 text-lg max-w-md">
             Gestão moderna, análise inteligente e praticidade em um só lugar.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
-            <Link href="/auth/login">
+          <div className="mt-8 flex flex-col sm:flex-row gap-4 sm:gap-6">
+            <Link href="/auth/login" passHref>
               <NeonButton variant="primary" size="lg">
                 Começar Agora
                 <ArrowRightIcon className="ml-2 h-5 w-5 inline" />
               </NeonButton>
             </Link>
             
-            <Link href="#features">
-              <NeonButton variant="ghost" size="lg">
+            <Link href="#features" passHref>
+              <NeonButton variant="secondary" size="lg">
                 Saiba Mais
               </NeonButton>
             </Link>
@@ -96,7 +96,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <div className="relative mx-auto w-full max-w-md lg:max-w-xl">
-            <GlassCard variant="gradient" className="p-6 sm:p-10">
+            <GlassCard className="p-6 sm:p-10">
               <div className="space-y-6">
                 {features.map((feature, index) => (
                   <motion.div 
@@ -106,12 +106,12 @@ export default function Hero() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 + (index * 0.1) }}
                   >
-                    <div className={`h-12 w-12 rounded-xl flex items-center justify-center backdrop-blur-sm border ${isLight ? 'bg-light-accentBlue/10 border-light-accentBlue/20' : 'bg-dark-accentBlue/20 border-dark-accentBlue/30'}`}>
-                      <feature.icon className={`h-6 w-6 ${isLight ? 'text-light-accentBlue' : 'text-dark-accentBlue'}`} />
+                    <div className={`h-12 w-12 rounded-xl flex items-center justify-center backdrop-blur-sm border ${isLight ? 'bg-light-accent-primary/10 border-light-accent-primary/20' : 'bg-dark-accent-primary/20 border-dark-accent-primary/30'}`}>
+                      <feature.icon className={`h-6 w-6 ${isLight ? 'text-light-accent-primary' : 'text-dark-accent-primary'}`} />
                     </div>
                     <div className="ml-4">
                       <h3 className="text-lg font-semibold">{feature.title}</h3>
-                      <p className={`mt-1 text-sm ${isLight ? 'text-light-textSecondary' : 'text-dark-textSecondary'}`}>{feature.description}</p>
+                      <p className={`mt-1 text-sm ${isLight ? 'text-light-text-secondary' : 'text-dark-text-secondary'}`}>{feature.description}</p>
                     </div>
                   </motion.div>
                 ))}
