@@ -71,6 +71,7 @@ export default function CreateAdvanceModal({ isOpen, onClose, onSuccess }: Creat
             <NeonInput
               label="Motivo do Adiantamento"
               as="textarea"
+              rows={4}
               placeholder="Descreva o motivo da viagem ou da solicitação"
               value={purpose}
               onChange={(e) => setPurpose(e.target.value)}

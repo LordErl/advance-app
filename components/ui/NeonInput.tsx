@@ -1,19 +1,26 @@
 'use client';
 
-import { forwardRef, useState, ReactNode } from 'react';
+import { forwardRef, useState, ReactNode, ChangeEvent, FocusEvent } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '@/providers/ThemeProvider';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
-interface NeonInputProps {
+// Suporta tanto input quanto textarea
+type InputElement = HTMLInputElement | HTMLTextAreaElement;
+type InputChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
+type InputFocusEvent = FocusEvent<HTMLInputElement | HTMLTextAreaElement>;
+
+export interface NeonInputProps {
   label?: string;
   placeholder?: string;
   type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search';
+  as?: 'input' | 'textarea'; // Nova prop para definir o elemento
+  rows?: number; // Para textarea
   value?: string;
   defaultValue?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onChange?: (e: InputChangeEvent) => void;
+  onBlur?: (e: InputFocusEvent) => void;
+  onFocus?: (e: InputFocusEvent) => void;
   error?: string;
   disabled?: boolean;
   required?: boolean;
@@ -25,7 +32,7 @@ interface NeonInputProps {
   variant?: 'default' | 'glass' | 'neon';
 }
 
-const NeonInput = forwardRef<HTMLInputElement, NeonInputProps>(({
+const NeonInput = forwardRef<InputElement, NeonInputProps>(({
   label,
   placeholder,
   type = 'text',
@@ -43,6 +50,8 @@ const NeonInput = forwardRef<HTMLInputElement, NeonInputProps>(({
   rightIcon,
   size = 'md',
   variant = 'default',
+  as: Component = 'input', // Define 'input' como padrão
+  rows = 3, // Padrão de linhas para textarea
 }, ref) => {
   const { theme } = useTheme();
   const isLight = theme === 'light';
@@ -93,12 +102,12 @@ const NeonInput = forwardRef<HTMLInputElement, NeonInputProps>(({
     }
   };
 
-  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+  const handleFocus = (e: InputFocusEvent) => {
     setIsFocused(true);
     onFocus?.(e);
   };
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+  const handleBlur = (e: InputFocusEvent) => {
     setIsFocused(false);
     onBlur?.(e);
   };
@@ -138,29 +147,53 @@ const NeonInput = forwardRef<HTMLInputElement, NeonInputProps>(({
           </div>
         )}
 
-        {/* Input */}
-        <motion.input
-          ref={ref}
-          type={inputType}
-          value={value}
-          defaultValue={defaultValue}
-          onChange={onChange}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          disabled={disabled}
-          required={required}
-          placeholder={placeholder}
-          className={`
-            ${getVariantClasses()}
-            ${getSizeClasses()}
-            ${leftIcon ? 'pl-10' : ''}
-            ${rightIcon || type === 'password' ? 'pr-10' : ''}
-            ${isLight ? 'text-light-textPrimary placeholder-light-textSecondary' : 'text-dark-textPrimary placeholder-dark-textSecondary'}
-            ${error ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}
-            ${inputClassName}
-          `}
-          whileFocus={variant === 'neon' ? { scale: 1.02 } : undefined}
-        />
+        {/* Renderização condicional para Input ou Textarea */}
+        {Component === 'textarea' ? (
+          <motion.textarea
+            ref={ref as React.Ref<HTMLTextAreaElement>}
+            rows={rows}
+            value={value}
+            defaultValue={defaultValue}
+            onChange={onChange as any}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            disabled={disabled}
+            required={required}
+            placeholder={placeholder}
+            className={`
+              ${getVariantClasses()}
+              ${getSizeClasses()}
+              min-h-[80px] // Altura mínima para textareas
+              ${isLight ? 'text-light-textPrimary placeholder-light-textSecondary' : 'text-dark-textPrimary placeholder-dark-textSecondary'}
+              ${error ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}
+              ${inputClassName}
+            `}
+            whileFocus={variant === 'neon' ? { scale: 1.02 } : undefined}
+          />
+        ) : (
+          <motion.input
+            ref={ref as React.Ref<HTMLInputElement>}
+            type={inputType}
+            value={value}
+            defaultValue={defaultValue}
+            onChange={onChange as any}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            disabled={disabled}
+            required={required}
+            placeholder={placeholder}
+            className={`
+              ${getVariantClasses()}
+              ${getSizeClasses()}
+              ${leftIcon ? 'pl-10' : ''}
+              ${rightIcon || type === 'password' ? 'pr-10' : ''}
+              ${isLight ? 'text-light-textPrimary placeholder-light-textSecondary' : 'text-dark-textPrimary placeholder-dark-textSecondary'}
+              ${error ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}
+              ${inputClassName}
+            `}
+            whileFocus={variant === 'neon' ? { scale: 1.02 } : undefined}
+          />
+        )}
 
         {/* Right Icon or Password Toggle */}
         {(rightIcon || type === 'password') && (

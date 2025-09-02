@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '@/providers/ThemeProvider';
-import { useToast } from '@/hooks/useToast';
+import { useToastHelpers } from '@/hooks/useToast';
 import GlassCard from '@/components/ui/GlassCard';
 import DashboardStats from '@/components/ui/DashboardStats';
 import CreateAdvanceModal from '@/components/advances/CreateAdvanceModal';
@@ -14,15 +14,12 @@ export default function DashboardPage() {
   const { theme } = useTheme();
   const isLight = theme === 'light';
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const addToast = useToast();
+  const { showSuccess } = useToastHelpers();
 
   // Função para ser chamada quando um adiantamento é criado com sucesso
   // No futuro, isso também irá acionar a atualização da lista de adiantamentos.
   const handleAdvanceCreated = () => {
-    addToast({
-      type: 'success',
-      message: 'Adiantamento solicitado com sucesso!',
-    });
+    showSuccess('Sucesso', 'Adiantamento solicitado com sucesso!');
     // Lógica para recarregar os dados do dashboard viria aqui
   };
 
