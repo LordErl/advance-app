@@ -10,7 +10,7 @@ type InputElement = HTMLInputElement | HTMLTextAreaElement;
 type InputChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 type InputFocusEvent = FocusEvent<HTMLInputElement | HTMLTextAreaElement>;
 
-export interface NeonInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface NeonInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
   label?: string;
   as?: 'input' | 'textarea';
   rows?: number;
