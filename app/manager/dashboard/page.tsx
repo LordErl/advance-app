@@ -7,7 +7,7 @@ import NeonInput from '@/components/ui/NeonInput';
 import NeonButton from '@/components/ui/NeonButton';
 import StatsCard from '@/components/ui/StatsCard';
 import { formatCurrency } from '@/utils/format';
-import { ClockIcon, BanknotesIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
+import { ClockIcon, BanknotesIcon, CheckCircleIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 
 // Define a type for the advance data for better type safety
 interface Advance {
@@ -140,40 +140,53 @@ export default function ManagerDashboard() {
         />
       </div>
 
-      <div className="bg-white shadow-lg rounded-lg p-6">
-        <h2 class="text-xl font-semibold text-gray-700 mb-4">Aprovações Pendentes</h2>
+      <GlassCard variant="glass" className="p-6">
+        <h2 className="text-2xl font-bold text-dark-textPrimary text-glow mb-6">Aprovações Pendentes</h2>
         
-        {isLoading && <p className="text-gray-500">Carregando solicitações...</p>}
-        {error && <p className="text-red-500">Erro: {error}</p>}
+        {isLoading && <p className="text-dark-textSecondary text-center py-8">Carregando solicitações...</p>}
+        {error && <p className="text-red-400 text-center py-8">Erro: {error}</p>}
         
         {!isLoading && !error && (
-          <div className="space-y-4">
+          <div className="space-y-6">
             {pendingApprovals.length > 0 ? (
               pendingApprovals.map((advance) => (
-                <div key={advance.id} className="border rounded-lg p-4 flex justify-between items-center">
-                  <div>
-                    <p className="font-semibold text-gray-800">{advance.profiles?.full_name || 'Usuário Desconhecido'}</p>
-                    <p className="text-sm text-gray-600">{advance.purpose}</p>
-                    <p className="text-lg font-bold text-blue-600">R$ {advance.amount.toFixed(2)}</p>
+                <GlassCard key={advance.id} variant="neon" className="p-4 transition-all hover:scale-[1.02]">
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div className="flex items-center gap-4">
+                      <UserCircleIcon className="w-10 h-10 text-dark-textSecondary" />
+                      <div>
+                        <p className="font-bold text-dark-textPrimary text-lg">{advance.profiles?.full_name || 'Usuário Desconhecido'}</p>
+                        <p className="text-sm text-dark-textSecondary font-mono">{advance.purpose}</p>
+                      </div>
+                    </div>
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+                      <div className="text-center sm:text-right font-bold text-xl text-glow-primary self-center pr-4">
+                        {formatCurrency(advance.amount)}
+                      </div>
+                      <div className="flex justify-center items-center gap-2">
+                        <NeonButton 
+                          onClick={() => handleApprove(advance.id)}
+                          variant="success"
+                          size="sm"
+                        >
+                          Aprovar
+                        </NeonButton>
+                        <NeonButton 
+                          onClick={() => openRejectModal(advance)}
+                          variant="danger"
+                          size="sm"
+                        >
+                          Rejeitar
+                        </NeonButton>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-2">
-                                        <button 
-                      onClick={() => handleApprove(advance.id)}
-                      className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
-                    >
-                      Aprovar
-                    </button>
-                                        <button 
-                      onClick={() => openRejectModal(advance)}
-                      className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
-                    >
-                      Rejeitar
-                    </button>
-                  </div>
-                </div>
+                </GlassCard>
               ))
             ) : (
-              <p className="text-gray-500">Nenhuma solicitação pendente no momento.</p>
+              <div className="text-center py-10">
+                <p className="text-dark-textSecondary">Nenhuma solicitação pendente no momento.</p>
+              </div>
             )}
           </div>
         )}
