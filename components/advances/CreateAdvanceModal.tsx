@@ -49,15 +49,15 @@ export default function CreateAdvanceModal({ isOpen, onClose, onSuccess }: Creat
       // 2. Get user's profile to find their team. Fetch the first profile found.
       const { data: profiles, error: profileError } = await supabase
         .from('profiles')
-        .select('team_id')
+        .select('team_id, codcfo') // Fetch codcfo as well
         .eq('id', user.id)
         .limit(1);
 
       const profile = profiles?.[0];
 
-      if (profileError || !profile || !profile.team_id) {
-        console.error('Profile error or not found:', profileError);
-        throw new Error('Não foi possível encontrar o time do usuário. Contate o suporte.');
+      if (profileError || !profile || !profile.team_id || !profile.codcfo) {
+        console.error('Profile error, or team_id/codcfo not found:', profileError);
+        throw new Error('Dados do perfil incompletos (time ou ID do funcionário não encontrado). Contate o suporte.');
       }
 
       // 3. Find the approver for that team
@@ -74,6 +74,7 @@ export default function CreateAdvanceModal({ isOpen, onClose, onSuccess }: Creat
       // 4. Prepare the new advance data with the assigned approver
       const newAdvance = {
         user_id: user.id, // Standardized column name
+        employee_id: profile.codcfo, // Add the employee_id
         amount: parseFloat(amount), // Standardized column name
         purpose: purpose,
         status: 'pending_approval',
