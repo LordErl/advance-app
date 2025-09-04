@@ -24,7 +24,7 @@ export async function GET() {
     }
 
     const { data: managedTeams, error: teamsError } = await supabase
-      .from('approver_teams')
+      .from('approver_team')
       .select('team_id')
       .eq('approver_id', user.id);
 
