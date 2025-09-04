@@ -9,6 +9,7 @@ import NeonInput from '@/components/ui/NeonInput';
 import NeonButton from '@/components/ui/NeonButton';
 import { AtSymbolIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 import { supabase } from '@/app/lib/supabase/client';
+import Link from 'next/link';
 
 export default function LoginForm() {
   const { theme } = useTheme();
