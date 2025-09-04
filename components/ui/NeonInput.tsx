@@ -10,21 +10,11 @@ type InputElement = HTMLInputElement | HTMLTextAreaElement;
 type InputChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 type InputFocusEvent = FocusEvent<HTMLInputElement | HTMLTextAreaElement>;
 
-export interface NeonInputProps {
+export interface NeonInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
-  placeholder?: string;
-  type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search';
-  as?: 'input' | 'textarea'; // Nova prop para definir o elemento
-  rows?: number; // Para textarea
-  value?: string;
-  defaultValue?: string;
-  onChange?: (e: InputChangeEvent) => void;
-  onBlur?: (e: InputFocusEvent) => void;
-  onFocus?: (e: InputFocusEvent) => void;
+  as?: 'input' | 'textarea';
+  rows?: number;
   error?: string;
-  disabled?: boolean;
-  required?: boolean;
-  className?: string;
   inputClassName?: string;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
@@ -32,7 +22,8 @@ export interface NeonInputProps {
   variant?: 'default' | 'glass' | 'neon';
 }
 
-const NeonInput = forwardRef<InputElement, NeonInputProps>(({
+const NeonInput = forwardRef<InputElement, NeonInputProps>((
+  {
   label,
   placeholder,
   type = 'text',
@@ -50,8 +41,9 @@ const NeonInput = forwardRef<InputElement, NeonInputProps>(({
   rightIcon,
   size = 'md',
   variant = 'default',
-  as: Component = 'input', // Define 'input' como padrão
-  rows = 3, // Padrão de linhas para textarea
+  as: Component = 'input',
+  rows = 3,
+  ...rest
 }, ref) => {
   const { theme } = useTheme();
   const isLight = theme === 'light';
@@ -171,17 +163,12 @@ const NeonInput = forwardRef<InputElement, NeonInputProps>(({
             whileFocus={variant === 'neon' ? { scale: 1.02 } : undefined}
           />
         ) : (
-          <motion.input
+                    <motion.input
             ref={ref as React.Ref<HTMLInputElement>}
             type={inputType}
-            value={value}
-            defaultValue={defaultValue}
-            onChange={onChange as any}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            disabled={disabled}
-            required={required}
-            placeholder={placeholder}
+            {...rest}
             className={`
               ${getVariantClasses()}
               ${getSizeClasses()}
