@@ -38,7 +38,24 @@ export default function LoginForm() {
           setError(error.message || 'Ocorreu um erro ao fazer login.');
         }
       } else {
-        router.push('/dashboard'); // Redireciona para o dashboard em caso de sucesso
+        // Login successful, now check if the user is a manager
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('is_manager')
+            .eq('id', user.id)
+            .single();
+
+          if (profile?.is_manager) {
+            router.push('/manager/dashboard'); // Redirect manager to their dashboard
+          } else {
+            router.push('/dashboard'); // Redirect regular user to their dashboard
+          }
+        } else {
+          // Fallback in case user data is not immediately available
+          router.push('/dashboard');
+        }
       }
     } catch (err) {
       setError('Falha na conexão. Tente novamente mais tarde.');
