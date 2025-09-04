@@ -97,11 +97,11 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ advanceId, onSuccess }) => {
         error={errors.description?.message}
         placeholder="Ex: Almoço com cliente"
       />
-      <NeonInput
+            <NeonInput
         label="Valor (R$)"
         type="number"
         icon={CurrencyDollarIcon}
-        {...register('amount')}
+        {...register('amount', { valueAsNumber: true })}
         error={errors.amount?.message}
         placeholder="50,00"
         step="0.01"
