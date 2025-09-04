@@ -7,8 +7,15 @@ export async function GET() {
   const supabase = createClient();
 
   try {
-    const { data: { user } } = await supabase.auth.getUser();
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+    if (authError) {
+      console.error('Supabase auth error:', authError);
+      return new NextResponse(JSON.stringify({ error: 'Authentication error', details: authError.message }), { status: 500 });
+    }
+
     if (!user) {
+      console.error('No user found, returning 401');
       return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
     }
 
@@ -23,7 +30,7 @@ export async function GET() {
     }
 
     const { data: managedTeams, error: teamsError } = await supabase
-      .from('approver_team')
+      .from('approver_teams')
       .select('team_id')
       .eq('approver_id', user.id);
 
