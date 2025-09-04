@@ -1,11 +1,10 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const supabase = createRouteHandlerClient({ cookies });
+  const supabase = createClient();
 
   try {
     const { data: { user } } = await supabase.auth.getUser();
@@ -30,7 +29,7 @@ export async function GET() {
 
     if (teamsError) throw teamsError;
 
-    const managedTeamIds = managedTeams.map(t => t.team_id);
+    const managedTeamIds = managedTeams.map((t: { team_id: string }) => t.team_id);
     if (managedTeamIds.length === 0) {
       return NextResponse.json([]);
     }
@@ -44,7 +43,7 @@ export async function GET() {
 
     if (usersError) throw usersError;
     
-    const teamUserIds = teamUsers.map(u => u.id);
+    const teamUserIds = teamUsers.map((u: { id: string }) => u.id);
     if (teamUserIds.length === 0) {
         return NextResponse.json([]); // No users in the managed teams
     }
