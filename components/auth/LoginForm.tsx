@@ -26,7 +26,7 @@ export default function LoginForm() {
     setError(null);
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data: signInData, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
@@ -37,14 +37,12 @@ export default function LoginForm() {
         } else {
           setError(error.message || 'Ocorreu um erro ao fazer login.');
         }
-      } else {
+      } else if (signInData.user) {
         // Login successful, now check if the user is a manager
-        const { data: { user } } = await supabase.auth.getUser();
-        if (user) {
-          const { data: profile } = await supabase
+        const { data: profile } = await supabase
             .from('profiles')
             .select('is_manager')
-            .eq('id', user.id)
+            .eq('id', signInData.user.id)
             .single();
 
           if (profile?.is_manager) {
@@ -52,10 +50,9 @@ export default function LoginForm() {
           } else {
             router.push('/dashboard'); // Redirect regular user to their dashboard
           }
-        } else {
-          // Fallback in case user data is not immediately available
+      } else {
+          // Fallback in case user data is not available, though it shouldn't happen on success
           router.push('/dashboard');
-        }
       }
     } catch (err) {
       setError('Falha na conexão. Tente novamente mais tarde.');
