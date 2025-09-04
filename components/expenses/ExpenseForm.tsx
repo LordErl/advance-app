@@ -93,7 +93,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ advanceId, onSuccess }) => {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <NeonInput
         label="Descrição da Despesa"
-        leftIcon={ChatBubbleLeftRightIcon}
+        leftIcon={<ChatBubbleLeftRightIcon className="w-5 h-5 text-gray-400" />}
         {...register('description')}
         error={errors.description?.message}
         placeholder="Ex: Almoço com cliente"
@@ -101,7 +101,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ advanceId, onSuccess }) => {
             <NeonInput
         label="Valor (R$)"
         type="number"
-        leftIcon={CurrencyDollarIcon}
+        leftIcon={<CurrencyDollarIcon className="w-5 h-5 text-gray-400" />}
         {...register('amount', { valueAsNumber: true })}
         error={errors.amount?.message}
         placeholder="50,00"
