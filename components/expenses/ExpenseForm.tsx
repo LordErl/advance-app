@@ -12,11 +12,11 @@ import { PaperClipIcon, CurrencyDollarIcon, ChatBubbleLeftRightIcon } from '@her
 
 // Zod schema for form validation
 // Zod schema for form validation
+// Zod schema for form validation
+// Zod schema for form validation
 const expenseSchema = z.object({
   description: z.string().min(10, 'A descrição deve ter pelo menos 10 caracteres.'),
-  amount: z.coerce.number({
-    invalid_type_error: 'O valor deve ser um número.',
-  }).positive('O valor deve ser positivo.'),
+  amount: z.coerce.number().positive('O valor deve ser positivo.'),
   receipt: z.any().refine((file: FileList) => file?.[0], 'O comprovante é obrigatório.'),
 });
 
