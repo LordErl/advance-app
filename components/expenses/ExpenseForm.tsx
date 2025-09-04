@@ -107,12 +107,12 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ advanceId, onSuccess }) => {
         placeholder="50,00"
         step="0.01"
       />
-      <NeonInput
+            <NeonInput
         label="Comprovante"
         type="file"
-        icon={PaperClipIcon}
+        leftIcon={<PaperClipIcon className="w-5 h-5 text-gray-400" />}
         {...register('receipt')}
-        error={errors.receipt?.message}
+        error={errors.receipt?.message as string}
         accept="image/*,application/pdf"
       />
       <NeonButton type="submit" fullWidth loading={loading} disabled={loading}>
