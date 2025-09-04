@@ -45,7 +45,13 @@ const NeonInput = forwardRef<InputElement, NeonInputProps>((
   size = 'md',
   variant = 'default',
   as: Component = 'input',
-  rows = 3
+  rows = 3,
+  name,
+  step,
+  min,
+  max,
+  maxLength,
+  autoComplete
 }, ref) => {
   const { theme } = useTheme();
   const isLight = theme === 'light';
