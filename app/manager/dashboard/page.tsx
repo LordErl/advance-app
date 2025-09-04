@@ -6,10 +6,10 @@ import Modal from '@/components/ui/Modal';
 import NeonInput from '@/components/ui/NeonInput';
 import NeonButton from '@/components/ui/NeonButton';
 import StatsCard from '@/components/ui/StatsCard';
-import { formatCurrency } from '@/utils/format';
+import GlassCard from '@/components/ui/GlassCard';
+import { formatCurrency } from '@/app/lib/utils/format';
 import { ClockIcon, BanknotesIcon, CheckCircleIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 
-// Define a type for the advance data for better type safety
 interface Advance {
   id: string;
   amount: number;
@@ -28,17 +28,39 @@ export default function ManagerDashboard() {
   const [error, setError] = useState<string | null>(null);
   const { addNotification } = useNotifications();
 
-  // Derived stats for the dashboard cards
-  const totalPendingCount = pendingApprovals.length;
-  const totalPendingAmount = pendingApprovals.reduce((sum, advance) => sum + advance.amount, 0);
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
   const [rejectionReason, setRejectionReason] = useState('');
   const [selectedAdvance, setSelectedAdvance] = useState<Advance | null>(null);
 
+  const totalPendingCount = pendingApprovals.length;
+  const totalPendingAmount = pendingApprovals.reduce((sum, advance) => sum + advance.amount, 0);
+
+  const fetchPendingApprovals = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await fetch('/api/approvals/pending');
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to fetch pending approvals');
+      }
+      const data: Advance[] = await response.json();
+      setPendingApprovals(data);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPendingApprovals();
+  }, []);
+
   const openRejectModal = (advance: Advance) => {
     setSelectedAdvance(advance);
     setIsRejectModalOpen(true);
-    setRejectionReason(''); // Reset reason on open
+    setRejectionReason('');
   };
 
   const handleReject = async () => {
@@ -82,7 +104,6 @@ export default function ManagerDashboard() {
         throw new Error(errorData.error || 'Falha ao aprovar a solicitação.');
       }
 
-      // Remove the approved advance from the list
       setPendingApprovals(current => current.filter(a => a.id !== advanceId));
       addNotification({ type: 'success', message: 'Adiantamento aprovado com sucesso!' });
 
@@ -91,28 +112,6 @@ export default function ManagerDashboard() {
     }
   };
 
-  useEffect(() => {
-    const fetchPendingApprovals = async () => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const response = await fetch('/api/approvals/pending');
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || 'Failed to fetch pending approvals');
-        }
-        const data: Advance[] = await response.json();
-        setPendingApprovals(data);
-      } catch (err: any) {
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchPendingApprovals();
-  }, []);
-
   return (
     <div className="container mx-auto p-4 md:p-8">
       <header className="mb-8">
@@ -120,7 +119,6 @@ export default function ManagerDashboard() {
         <p className="text-gray-500 mt-1">Acompanhe e gerencie as solicitações do seu time.</p>
       </header>
 
-      {/* Stats Cards Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         <StatsCard 
           title="Solicitações Pendentes"
@@ -134,13 +132,13 @@ export default function ManagerDashboard() {
         />
         <StatsCard 
           title="Aprovados este Mês"
-          value="--" // Placeholder for future implementation
+          value="--"
           icon={<CheckCircleIcon className="w-8 h-8 text-blue-500" />}
           description="Recurso em desenvolvimento"
         />
       </div>
 
-      <GlassCard variant="glass" className="p-6">
+      <GlassCard className="p-6">
         <h2 className="text-2xl font-bold text-dark-textPrimary text-glow mb-6">Aprovações Pendentes</h2>
         
         {isLoading && <p className="text-dark-textSecondary text-center py-8">Carregando solicitações...</p>}
@@ -150,7 +148,7 @@ export default function ManagerDashboard() {
           <div className="space-y-6">
             {pendingApprovals.length > 0 ? (
               pendingApprovals.map((advance) => (
-                <GlassCard key={advance.id} variant="neon" className="p-4 transition-all hover:scale-[1.02]">
+                <GlassCard key={advance.id} className="p-4 transition-all hover:scale-[1.02]">
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div className="flex items-center gap-4">
                       <UserCircleIcon className="w-10 h-10 text-dark-textSecondary" />
@@ -164,20 +162,8 @@ export default function ManagerDashboard() {
                         {formatCurrency(advance.amount)}
                       </div>
                       <div className="flex justify-center items-center gap-2">
-                        <NeonButton 
-                          onClick={() => handleApprove(advance.id)}
-                          variant="success"
-                          size="sm"
-                        >
-                          Aprovar
-                        </NeonButton>
-                        <NeonButton 
-                          onClick={() => openRejectModal(advance)}
-                          variant="danger"
-                          size="sm"
-                        >
-                          Rejeitar
-                        </NeonButton>
+                        <NeonButton onClick={() => handleApprove(advance.id)} variant="success" size="sm">Aprovar</NeonButton>
+                        <NeonButton onClick={() => openRejectModal(advance)} variant="danger" size="sm">Rejeitar</NeonButton>
                       </div>
                     </div>
                   </div>
@@ -190,15 +176,10 @@ export default function ManagerDashboard() {
             )}
           </div>
         )}
-      </div>
+      </GlassCard>
 
-      {/* Rejection Modal */}
       {isRejectModalOpen && selectedAdvance && (
-        <Modal 
-          isOpen={isRejectModalOpen} 
-          onClose={() => setIsRejectModalOpen(false)} 
-          title="Rejeitar Solicitação"
-        >
+        <Modal isOpen={isRejectModalOpen} onClose={() => setIsRejectModalOpen(false)} title="Rejeitar Solicitação">
           <div className="p-4">
             <p className="mb-4 text-gray-600">
               Você está prestes a rejeitar a solicitação de <strong className="text-gray-800">{selectedAdvance.profiles?.full_name}</strong>. Por favor, informe o motivo abaixo.
@@ -213,12 +194,8 @@ export default function ManagerDashboard() {
               className="min-h-[100px]"
             />
             <div className="flex justify-end space-x-3 mt-6">
-              <NeonButton variant="ghost" onClick={() => setIsRejectModalOpen(false)}>
-                Cancelar
-              </NeonButton>
-              <NeonButton variant="danger" onClick={handleReject}>
-                Confirmar Rejeição
-              </NeonButton>
+              <NeonButton variant="ghost" onClick={() => setIsRejectModalOpen(false)}>Cancelar</NeonButton>
+              <NeonButton variant="danger" onClick={handleReject}>Confirmar Rejeição</NeonButton>
             </div>
           </div>
         </Modal>
