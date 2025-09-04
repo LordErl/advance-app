@@ -10,7 +10,7 @@ type InputElement = HTMLInputElement | HTMLTextAreaElement;
 type InputChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 type InputFocusEvent = FocusEvent<HTMLInputElement | HTMLTextAreaElement>;
 
-export interface NeonInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
+export interface NeonInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'onChange' | 'onFocus' | 'onBlur'> {
   label?: string;
   as?: 'input' | 'textarea';
   rows?: number;
@@ -20,6 +20,9 @@ export interface NeonInputProps extends Omit<React.InputHTMLAttributes<HTMLInput
   rightIcon?: ReactNode;
   size?: 'sm' | 'md' | 'lg';
   variant?: 'default' | 'glass' | 'neon';
+  onChange?: (e: InputChangeEvent) => void;
+  onFocus?: (e: InputFocusEvent) => void;
+  onBlur?: (e: InputFocusEvent) => void;
 }
 
 const NeonInput = forwardRef<InputElement, NeonInputProps>((
@@ -42,8 +45,7 @@ const NeonInput = forwardRef<InputElement, NeonInputProps>((
   size = 'md',
   variant = 'default',
   as: Component = 'input',
-  rows = 3,
-  ...rest
+  rows = 3
 }, ref) => {
   const { theme } = useTheme();
   const isLight = theme === 'light';
@@ -166,9 +168,20 @@ const NeonInput = forwardRef<InputElement, NeonInputProps>((
                     <motion.input
             ref={ref as React.Ref<HTMLInputElement>}
             type={inputType}
+            value={value}
+            defaultValue={defaultValue}
+            onChange={onChange as any} // O 'as any' é um compromisso aqui para a polimorfia
             onFocus={handleFocus}
             onBlur={handleBlur}
-            {...rest}
+            disabled={disabled}
+            required={required}
+            placeholder={placeholder}
+            name={name}
+            step={step} // Adicionando props que foram removidas pelo ...rest
+            min={min}
+            max={max}
+            maxLength={maxLength}
+            autoComplete={autoComplete}
             className={`
               ${getVariantClasses()}
               ${getSizeClasses()}
