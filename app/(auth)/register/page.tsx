@@ -60,7 +60,7 @@ export default function RegisterPage() {
         password,
         options: {
           data: {
-            name,
+            full_name: name,
           },
         },
       });

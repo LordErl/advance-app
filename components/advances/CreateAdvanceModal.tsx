@@ -46,14 +46,17 @@ export default function CreateAdvanceModal({ isOpen, onClose, onSuccess }: Creat
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Usuário não autenticado.');
 
-      // 2. Get user's profile to find their team
-      const { data: profile, error: profileError } = await supabase
+      // 2. Get user's profile to find their team. Fetch the first profile found.
+      const { data: profiles, error: profileError } = await supabase
         .from('profiles')
         .select('team_id')
         .eq('id', user.id)
-        .single();
+        .limit(1);
+
+      const profile = profiles?.[0];
 
       if (profileError || !profile || !profile.team_id) {
+        console.error('Profile error or not found:', profileError);
         throw new Error('Não foi possível encontrar o time do usuário. Contate o suporte.');
       }
 
