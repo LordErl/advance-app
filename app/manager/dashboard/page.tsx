@@ -64,8 +64,11 @@ export default function ManagerDashboard() {
         .eq('approver_id', user.id);
 
       if (teamsError) {
-        throw new Error('Erro ao buscar times gerenciados');
+        console.error('Erro na tabela approver_teams:', teamsError);
+        throw new Error(`Erro ao buscar times gerenciados: ${teamsError.message}`);
       }
+      
+      console.log('Teams encontrados:', teams);
 
       if (!teams || teams.length === 0) {
         setPendingApprovals([]);
@@ -81,8 +84,11 @@ export default function ManagerDashboard() {
         .in('team_id', teamIds);
 
       if (membersError) {
-        throw new Error('Erro ao buscar membros dos times');
+        console.error('Erro na tabela profiles:', membersError);
+        throw new Error(`Erro ao buscar membros dos times: ${membersError.message}`);
       }
+      
+      console.log('Team members encontrados:', teamMembers);
 
       if (!teamMembers || teamMembers.length === 0) {
         setPendingApprovals([]);
@@ -110,8 +116,11 @@ export default function ManagerDashboard() {
         .order('created_at', { ascending: false });
 
       if (advancesError) {
-        throw new Error('Erro ao buscar adiantamentos pendentes');
+        console.error('Erro na tabela travel_advances:', advancesError);
+        throw new Error(`Erro ao buscar adiantamentos pendentes: ${advancesError.message}`);
       }
+      
+      console.log('Advances encontrados:', advances);
 
       // Transformar os dados para o formato esperado
       const formattedAdvances = (advances || []).map(advance => ({
