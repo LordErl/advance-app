@@ -44,7 +44,7 @@ const NeonButton = forwardRef<HTMLButtonElement, NeonButtonProps>((
   };
 
   const lightVariantClasses: Record<ButtonVariant, string> = {
-    primary: 'bg-light-primary text-white hover:bg-light-primary/90',
+    primary: 'bg-light-primary text-white text-stroke-sm hover:bg-light-primary/90',
     secondary: 'border-light-primary text-light-primary hover:bg-light-primary/10',
     success: 'border-green-600 bg-green-100 text-green-700 hover:bg-green-200/80',
     danger: 'border-red-600 bg-red-100 text-red-700 hover:bg-red-200/80',
