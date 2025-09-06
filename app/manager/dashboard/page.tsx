@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { supabase } from '@/app/lib/supabase/client';
 import { useNotifications } from '@/app/components/NotificationSystem';
 import Modal from '@/components/ui/Modal';
 import NeonInput from '@/components/ui/NeonInput';
@@ -39,19 +40,90 @@ export default function ManagerDashboard() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('/api/approvals/pending', { 
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to fetch pending approvals');
+      // Verificar se o usuário está autenticado
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        throw new Error('Usuário não autenticado');
       }
-      const data: Advance[] = await response.json();
-      setPendingApprovals(data);
+
+      // Verificar se o usuário é manager
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('is_manager')
+        .eq('id', user.id)
+        .single();
+
+      if (profileError || !profile?.is_manager) {
+        throw new Error('Acesso negado: usuário não é manager');
+      }
+
+      // Buscar times gerenciados pelo usuário
+      const { data: teams, error: teamsError } = await supabase
+        .from('approver_teams')
+        .select('team_id')
+        .eq('approver_id', user.id);
+
+      if (teamsError) {
+        throw new Error('Erro ao buscar times gerenciados');
+      }
+
+      if (!teams || teams.length === 0) {
+        setPendingApprovals([]);
+        return;
+      }
+
+      const teamIds = teams.map(t => t.team_id);
+
+      // Buscar usuários dos times
+      const { data: teamMembers, error: membersError } = await supabase
+        .from('profiles')
+        .select('id')
+        .in('team_id', teamIds);
+
+      if (membersError) {
+        throw new Error('Erro ao buscar membros dos times');
+      }
+
+      if (!teamMembers || teamMembers.length === 0) {
+        setPendingApprovals([]);
+        return;
+      }
+
+      const memberIds = teamMembers.map(m => m.id);
+
+      // Buscar adiantamentos pendentes
+      const { data: advances, error: advancesError } = await supabase
+        .from('travel_advances')
+        .select(`
+          id,
+          amount,
+          purpose,
+          status,
+          created_at,
+          profiles!travel_advances_user_id_fkey (
+            full_name,
+            avatar_url
+          )
+        `)
+        .eq('status', 'pending')
+        .in('user_id', memberIds)
+        .order('created_at', { ascending: false });
+
+      if (advancesError) {
+        throw new Error('Erro ao buscar adiantamentos pendentes');
+      }
+
+      // Transformar os dados para o formato esperado
+      const formattedAdvances = (advances || []).map(advance => ({
+        ...advance,
+        profiles: Array.isArray(advance.profiles) && advance.profiles.length > 0 
+          ? advance.profiles[0] 
+          : null
+      }));
+      
+      setPendingApprovals(formattedAdvances);
     } catch (err: any) {
+      console.error('Erro ao carregar aprovações:', err);
       setError(err.message);
     } finally {
       setIsLoading(false);
@@ -75,15 +147,18 @@ export default function ManagerDashboard() {
     }
 
     try {
-      const response = await fetch(`/api/approvals/${selectedAdvance.id}/reject`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reason: rejectionReason }),
-      });
+      const { error } = await supabase
+        .from('travel_advances')
+        .update({ 
+          status: 'rejected',
+          rejected_at: new Date().toISOString(),
+          rejected_by: (await supabase.auth.getUser()).data.user?.id,
+          rejection_reason: rejectionReason
+        })
+        .eq('id', selectedAdvance.id);
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Falha ao rejeitar a solicitação.');
+      if (error) {
+        throw new Error('Erro ao rejeitar adiantamento');
       }
 
       setPendingApprovals(current => current.filter(a => a.id !== selectedAdvance.id));
@@ -100,13 +175,17 @@ export default function ManagerDashboard() {
 
   const handleApprove = async (advanceId: string) => {
     try {
-      const response = await fetch(`/api/approvals/${advanceId}/approve`, {
-        method: 'POST',
-      });
+      const { error } = await supabase
+        .from('travel_advances')
+        .update({ 
+          status: 'approved',
+          approved_at: new Date().toISOString(),
+          approved_by: (await supabase.auth.getUser()).data.user?.id
+        })
+        .eq('id', advanceId);
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Falha ao aprovar a solicitação.');
+      if (error) {
+        throw new Error('Erro ao aprovar adiantamento');
       }
 
       setPendingApprovals(current => current.filter(a => a.id !== advanceId));
