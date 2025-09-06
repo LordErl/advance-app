@@ -44,29 +44,55 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ advanceId, onSuccess }) => {
   const onSubmit: SubmitHandler<ExpenseFormInputs> = async (data) => {
     setLoading(true);
     try {
+      // Verificar autenticação primeiro
+      const { data: { user }, error: authError } = await supabase.auth.getUser();
+      if (authError || !user) {
+        throw new Error('Usuário não autenticado. Faça login novamente.');
+      }
+      console.log('Usuário autenticado:', user.email);
+
       const receiptFile = data.receipt[0];
       if (!receiptFile) {
         throw new Error('Arquivo de comprovante não encontrado.');
       }
 
-      // 1. Upload receipt to Supabase Storage
-      console.log('Iniciando upload do arquivo:', receiptFile.name);
-      console.log('Tamanho do arquivo:', receiptFile.size);
-      console.log('Tipo do arquivo:', receiptFile.type);
+      // Validar arquivo
+      console.log('=== INFORMAÇÕES DO ARQUIVO ===');
+      console.log('Nome:', receiptFile.name);
+      console.log('Tamanho:', receiptFile.size, 'bytes');
+      console.log('Tipo:', receiptFile.type);
       
-      const filePath = `${advanceId}-${Date.now()}-${receiptFile.name}`;
+      // Verificar tamanho (máximo 10MB)
+      if (receiptFile.size > 10 * 1024 * 1024) {
+        throw new Error('Arquivo muito grande. Máximo permitido: 10MB');
+      }
+
+      // Verificar tipo de arquivo
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
+      if (!allowedTypes.includes(receiptFile.type)) {
+        throw new Error('Tipo de arquivo não permitido. Use: JPG, PNG ou PDF');
+      }
+      
+      const filePath = `${user.id}/${advanceId}-${Date.now()}-${receiptFile.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
       console.log('Caminho do arquivo:', filePath);
       
+      console.log('=== INICIANDO UPLOAD ===');
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from('receipts')
-        .upload(filePath, receiptFile);
+        .upload(filePath, receiptFile, {
+          cacheControl: '3600',
+          upsert: false
+        });
 
       if (uploadError) {
-        console.error('Erro detalhado no upload:', uploadError);
+        console.error('=== ERRO NO UPLOAD ===');
+        console.error('Mensagem:', uploadError.message);
+        console.error('Detalhes completos:', uploadError);
         throw new Error(`Erro no upload: ${uploadError.message}`);
       }
       
-      console.log('Upload realizado com sucesso:', uploadData);
+      console.log('=== UPLOAD CONCLUÍDO ===');
+      console.log('Dados do upload:', uploadData);
 
       // 2. Get public URL
       const { data: urlData } = supabase.storage
