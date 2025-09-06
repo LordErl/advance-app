@@ -103,9 +103,10 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ advanceId, onSuccess }) => {
 
       console.log('=== SALVANDO NO BANCO DE DADOS ===');
       
-      // 3. Insert expense record into the database
+      // Inserir despesa com todos os campos obrigatórios
       const { error: insertError } = await supabase.from('expenses').insert({
         advance_id: advanceId,
+        expense_date: new Date().toISOString().split('T')[0], // Data atual no formato YYYY-MM-DD
         description: data.description,
         amount: data.amount,
         receipt_filename: receiptData.filename,
@@ -114,6 +115,10 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ advanceId, onSuccess }) => {
         receipt_data: receiptData.data,
         user_id: user.id,
       });
+      
+      if (!insertError) {
+        console.log('✅ Despesa salva com sucesso!');
+      }
 
       if (insertError) throw insertError;
 
