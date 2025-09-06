@@ -23,8 +23,8 @@ export default function GlassCard({
   const baseClasses = 'relative rounded-2xl backdrop-blur-lg transition-all duration-300 ease-out p-6';
 
   const themeClasses = isLight
-    ? 'bg-light-card border border-white/20 shadow-glass hover:border-white/60 hover:shadow-lg'
-    : 'bg-dark-card border border-dark-accent-primary/30 shadow-neon-glow-primary hover:border-dark-accent-primary/70';
+    ? 'light-royal-card hover:shadow-lg'
+    : 'royal-card royal-glow hover:shadow-xl';
 
   const Component = clickable ? motion.button : motion.div;
 

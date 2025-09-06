@@ -15,23 +15,25 @@ const config: Config = {
         'background-dark': 'var(--background-dark)',
         'text-dark': 'var(--text-dark)',
 
-        // Light Glass Theme
-        'light-bg': '#F5F5F5', // Off-white
-        'light-bg-gradient-start': '#E3F2FD',
-        'light-bg-gradient-end': '#FCE4EC',
-        'light-card': 'rgba(255, 255, 255, 0.7)',
-        'light-text-primary': '#1E1E1E',
-        'light-text-secondary': '#555555',
-        'light-accent-primary': '#1976D2', // Blue
-        'light-accent-secondary': '#D81B60', // Pink
+        // Light Royal Theme
+        'light-bg': '#FAFBFF', // Soft white with blue tint
+        'light-bg-gradient-start': '#F0F4FF',
+        'light-bg-gradient-end': '#FFF9F0',
+        'light-cardBg': 'rgba(255, 255, 255, 0.85)',
+        'light-textPrimary': '#1A237E', // Deep royal blue
+        'light-textSecondary': '#3949AB', // Medium royal blue
+        'light-primary': '#1565C0', // Royal blue
+        'light-accentBlue': '#2196F3', // Bright blue
+        'light-accentGold': '#FFB300', // Elegant gold
 
-        // Dark Futurista Theme
-        'dark-bg': '#000000',
-        'dark-card': 'rgba(30, 30, 30, 0.6)',
-        'dark-text-primary': '#FFFFFF',
-        'dark-text-secondary': '#AAAAAA',
-        'dark-accent-primary': '#00CFFF', // Cyan
-        'dark-accent-secondary': '#8E24AA', // Purple
+        // Dark Royal Navy Theme
+        'dark-bg': 'linear-gradient(135deg, #0A1628 0%, #1A237E 100%)', // Navy gradient
+        'dark-cardBg': 'rgba(25, 39, 126, 0.15)', // Royal blue with transparency
+        'dark-textPrimary': '#E8EAF6', // Light blue-white
+        'dark-textSecondary': '#C5CAE9', // Soft blue-gray
+        'dark-accentBlue': '#40C4FF', // Neon blue
+        'dark-accentGold': '#FFD54F', // Soft gold
+        'dark-primary': '#1976D2', // Royal blue
 
         // Fintech Mobile Theme (Light)
         'fintech-light-bg': '#F5F5F5',

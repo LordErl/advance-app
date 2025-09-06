@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
-      <body className={inter.className}>
+      <body className={`${inter.className} antialiased dark:navy-gradient bg-light-bg`}>
         <Providers>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                         <Navbar />

@@ -99,10 +99,10 @@ export default function StatsCard({
     if (!trend) return '';
     
     if (trend.isPositive === undefined) {
-      return isLight ? 'text-gray-600' : 'text-gray-300';
+      return isLight ? 'text-light-textSecondary' : 'text-dark-textSecondary';
     }
     
-    return trend.isPositive ? 'text-green-400' : 'text-red-400';
+    return trend.isPositive ? 'text-green-400 neon-gold' : 'text-red-400';
   };
 
   const cardContent = (
@@ -111,8 +111,8 @@ export default function StatsCard({
       <div className="flex items-start justify-between mb-4">
         <div className="flex-1">
           <h3 className={`
-            text-sm font-medium text-stroke-sm
-            ${isLight ? 'text-gray-600' : 'text-gray-200'}
+            text-sm font-medium
+            ${isLight ? 'text-light-textSecondary' : 'text-dark-textSecondary'}
           `}>
             {title}
           </h3>
@@ -142,8 +142,8 @@ export default function StatsCard({
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
           className={`
-            ${getValueSize()} font-bold text-stroke-sm
-            ${isLight ? 'text-gray-900' : 'text-white'}
+            ${getValueSize()} font-bold
+            ${isLight ? 'text-light-textPrimary' : 'neon-blue'}
           `}
         >
           {value}
