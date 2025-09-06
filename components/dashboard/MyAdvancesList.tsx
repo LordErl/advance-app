@@ -8,7 +8,8 @@ import NeonButton from '../ui/NeonButton';
 import LoadingSpinner from '../ui/LoadingSpinner';
 import Modal from '../ui/Modal';
 import ExpenseForm from '../expenses/ExpenseForm';
-import { TagIcon, CalendarIcon, BanknotesIcon, DocumentPlusIcon } from '@heroicons/react/24/outline';
+import AdvanceStatement from '../advances/AdvanceStatement';
+import { TagIcon, CalendarIcon, BanknotesIcon, DocumentPlusIcon, ChartBarIcon } from '@heroicons/react/24/outline';
 
 interface Advance {
   id: number;
@@ -23,7 +24,9 @@ const MyAdvancesList = () => {
   const [advances, setAdvances] = useState<Advance[]>([]);
   const [loading, setLoading] = useState(true);
   const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false);
+  const [isStatementModalOpen, setIsStatementModalOpen] = useState(false);
   const [selectedAdvanceId, setSelectedAdvanceId] = useState<number | null>(null);
+  const [selectedAdvance, setSelectedAdvance] = useState<Advance | null>(null);
   const { showError } = useToastHelpers();
 
   const fetchAdvances = async () => {
@@ -66,6 +69,17 @@ const MyAdvancesList = () => {
     // fetchAdvances(); 
   };
 
+  const handleOpenStatementModal = (advance: Advance) => {
+    setSelectedAdvance(advance);
+    setIsStatementModalOpen(true);
+  };
+
+  const handleCloseStatementModal = () => {
+    setIsStatementModalOpen(false);
+    setSelectedAdvance(null);
+    fetchAdvances(); // Refetch para atualizar status se foi fechado
+  };
+
   const statusStyles: Record<Advance['status'], string> = {
     pending_approval: 'bg-yellow-500/20 text-yellow-400',
     approved: 'bg-green-500/20 text-green-400',
@@ -103,12 +117,20 @@ const MyAdvancesList = () => {
                 <span className={`px-3 py-1 text-xs font-semibold rounded-full text-center ${statusStyles[advance.status]}`}>
                   {advance.status.replace('_', ' ').toUpperCase()}
                 </span>
-                {advance.type === 'travel_expense' && advance.status === 'approved' && (
-                  <NeonButton size="sm" variant="secondary" onClick={() => handleOpenExpenseModal(advance.id)}>
-                    <DocumentPlusIcon className="w-4 h-4 mr-1" />
-                    Lançar Despesas
-                  </NeonButton>
-                )}
+                <div className="flex gap-2">
+                  {advance.status === 'approved' && (
+                    <NeonButton size="sm" variant="ghost" onClick={() => handleOpenStatementModal(advance)}>
+                      <ChartBarIcon className="w-4 h-4 mr-1" />
+                      Ver Extrato
+                    </NeonButton>
+                  )}
+                  {advance.type === 'travel_expense' && advance.status === 'approved' && (
+                    <NeonButton size="sm" variant="secondary" onClick={() => handleOpenExpenseModal(advance.id)}>
+                      <DocumentPlusIcon className="w-4 h-4 mr-1" />
+                      Lançar Despesas
+                    </NeonButton>
+                  )}
+                </div>
               </div>
             </div>
           ))}
@@ -120,6 +142,23 @@ const MyAdvancesList = () => {
           <ExpenseForm 
             advanceId={selectedAdvanceId} 
             onSuccess={handleExpenseSuccess} 
+          />
+        </Modal>
+      )}
+
+      {selectedAdvance && (
+        <Modal 
+          isOpen={isStatementModalOpen} 
+          onClose={handleCloseStatementModal} 
+          title="Conta-Corrente do Adiantamento"
+          size="xl"
+        >
+          <AdvanceStatement
+            advanceId={selectedAdvance.id}
+            advanceAmount={selectedAdvance.amount}
+            advancePurpose={selectedAdvance.purpose}
+            status={selectedAdvance.status}
+            onClose={handleCloseStatementModal}
           />
         </Modal>
       )}
