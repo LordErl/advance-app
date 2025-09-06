@@ -180,18 +180,20 @@ export default function ManagerDashboard() {
     }
 
     try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
       const { error } = await supabase
         .from('travel_advances')
         .update({ 
           status: 'rejected',
-          rejected_at: new Date().toISOString(),
-          rejected_by: (await supabase.auth.getUser()).data.user?.id,
-          rejection_reason: rejectionReason
+          rejection_reason: rejectionReason,
+          manager_id: user?.id
         })
         .eq('id', selectedAdvance.id);
 
       if (error) {
-        throw new Error('Erro ao rejeitar adiantamento');
+        console.error('Erro detalhado na rejeição:', error);
+        throw new Error(`Erro ao rejeitar adiantamento: ${error.message}`);
       }
 
       setPendingApprovals(current => current.filter(a => a.id !== selectedAdvance.id));
@@ -208,17 +210,20 @@ export default function ManagerDashboard() {
 
   const handleApprove = async (advanceId: string) => {
     try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
       const { error } = await supabase
         .from('travel_advances')
         .update({ 
           status: 'approved',
-          approved_at: new Date().toISOString(),
-          approved_by: (await supabase.auth.getUser()).data.user?.id
+          approval_date: new Date().toISOString(),
+          manager_id: user?.id
         })
         .eq('id', advanceId);
 
       if (error) {
-        throw new Error('Erro ao aprovar adiantamento');
+        console.error('Erro detalhado na aprovação:', error);
+        throw new Error(`Erro ao aprovar adiantamento: ${error.message}`);
       }
 
       setPendingApprovals(current => current.filter(a => a.id !== advanceId));
