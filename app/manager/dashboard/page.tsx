@@ -17,6 +17,7 @@ interface Advance {
   purpose: string;
   status: string;
   created_at: string;
+  team_name?: string;
   profiles: {
     full_name: string;
     avatar_url: string;
@@ -60,7 +61,7 @@ export default function ManagerDashboard() {
       // Buscar times gerenciados pelo usuário
       const { data: teams, error: teamsError } = await supabase
         .from('approver_teams')
-        .select('team_id')
+        .select('team_id, team_name')
         .eq('approver_id', user.id);
 
       if (teamsError) {
@@ -97,7 +98,13 @@ export default function ManagerDashboard() {
 
       const memberIds = teamMembers.map(m => m.id);
 
-      // Buscar adiantamentos pendentes
+      // Criar um mapa de team_id para team_name
+      const teamMap = teams.reduce((map, team) => {
+        map[team.team_id] = team.team_name;
+        return map;
+      }, {} as Record<string, string>);
+
+      // Buscar adiantamentos pendentes com dados do empregado
       const { data: advances, error: advancesError } = await supabase
         .from('travel_advances')
         .select(`
@@ -106,9 +113,12 @@ export default function ManagerDashboard() {
           purpose,
           status,
           created_at,
+          employee_id,
           profiles:employee_id (
+            id,
             full_name,
-            avatar_url
+            avatar_url,
+            team_id
           )
         `)
         .in('status', ['pending_approval'])
@@ -123,12 +133,26 @@ export default function ManagerDashboard() {
       console.log('Advances encontrados:', advances);
 
       // Transformar os dados para o formato esperado
-      const formattedAdvances = (advances || []).map(advance => ({
-        ...advance,
-        profiles: Array.isArray(advance.profiles) && advance.profiles.length > 0 
+      const formattedAdvances = (advances || []).map(advance => {
+        console.log('Advance original:', advance);
+        
+        // Extrair o primeiro profile (Supabase retorna array mesmo sendo 1:1)
+        const profile = Array.isArray(advance.profiles) && advance.profiles.length > 0 
           ? advance.profiles[0] 
-          : null
-      }));
+          : advance.profiles;
+        
+        // Type assertion para corrigir TypeScript
+        const profileData = profile as any;
+        
+        return {
+          ...advance,
+          profiles: profileData ? {
+            full_name: profileData.full_name,
+            avatar_url: profileData.avatar_url
+          } : null,
+          team_name: profileData?.team_id ? teamMap[profileData.team_id] : 'Time não encontrado'
+        };
+      });
       
       setPendingApprovals(formattedAdvances);
     } catch (err: any) {
@@ -247,6 +271,7 @@ export default function ManagerDashboard() {
                       <UserCircleIcon className="w-10 h-10 text-dark-textSecondary" />
                       <div>
                         <p className="font-bold text-dark-textPrimary text-lg">{advance.profiles?.full_name || 'Usuário Desconhecido'}</p>
+                        <p className="text-xs text-blue-400 font-semibold mb-1">💼 {advance.team_name}</p>
                         <p className="text-sm text-dark-textSecondary font-mono">{advance.purpose}</p>
                       </div>
                     </div>
