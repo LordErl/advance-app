@@ -6,10 +6,10 @@ import { motion } from 'framer-motion';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useToastHelpers } from '@/hooks/useToast';
 import GlassCard from '@/components/ui/GlassCard';
-import DashboardStats from '@/components/ui/DashboardStats';
+import RealDashboardStats from '@/components/dashboard/RealDashboardStats';
 import CreateAdvanceModal from '@/components/advances/CreateAdvanceModal';
 import NeonButton from '@/components/ui/NeonButton';
-import { PlusCircleIcon } from '@heroicons/react/24/outline';
+import { PlusCircleIcon, DocumentTextIcon, ChartBarIcon } from '@heroicons/react/24/outline';
 import PendingApprovals from '@/components/dashboard/PendingApprovals';
 import MyAdvancesList from '@/components/dashboard/MyAdvancesList';
 
@@ -76,10 +76,10 @@ export default function DashboardPage() {
             Visão Geral
           </h1>
 
-          <DashboardStats />
+          <RealDashboardStats />
         </motion.div>
 
-        {/* Main Content Area */}
+        {/* Ações Rápidas */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -87,23 +87,41 @@ export default function DashboardPage() {
           className="mt-8"
         >
           <GlassCard className="p-6">
-            <h2 className={`text-2xl font-semibold mb-4 ${isLight ? 'text-light-textPrimary' : 'text-dark-textPrimary'}`}>
-              Próximas Ações
+            <h2 className={`text-2xl font-semibold mb-6 ${isLight ? 'text-light-textPrimary' : 'text-dark-textPrimary'}`}>
+              Ações Rápidas
             </h2>
-            <div className="flex items-center justify-center">
-                <NeonButton 
-                  variant="primary"
-                  onClick={() => setIsModalOpen(true)}
-                  className="w-full md:w-auto"
-                >
-                  <PlusCircleIcon className="w-5 h-5 mr-2" />
-                  Solicitar Novo Adiantamento
-                </NeonButton>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <NeonButton 
+                variant="primary"
+                onClick={() => setIsModalOpen(true)}
+                className="h-16 text-lg"
+              >
+                <PlusCircleIcon className="w-6 h-6 mr-2" />
+                Solicitar Novo Adiantamento
+              </NeonButton>
+              
+              <NeonButton 
+                variant="secondary"
+                className="h-16 text-lg"
+                onClick={() => {/* TODO: Implementar */}}
+              >
+                <DocumentTextIcon className="w-6 h-6 mr-2" />
+                Pendências
+              </NeonButton>
+              
+              <NeonButton 
+                variant="ghost"
+                className="h-16 text-lg"
+                onClick={() => {/* TODO: Implementar */}}
+              >
+                <ChartBarIcon className="w-6 h-6 mr-2" />
+                Relatórios
+              </NeonButton>
             </div>
           </GlassCard>
         </motion.div>
 
-        {/* My Advances List */}
+        {/* Meus Adiantamentos */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
