@@ -76,40 +76,43 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ advanceId, onSuccess }) => {
       const filePath = `${user.id}/${advanceId}-${Date.now()}-${receiptFile.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
       console.log('Caminho do arquivo:', filePath);
       
-      console.log('=== INICIANDO UPLOAD ===');
-      const { data: uploadData, error: uploadError } = await supabase.storage
-        .from('receipts')
-        .upload(filePath, receiptFile, {
-          cacheControl: '3600',
-          upsert: false
-        });
-
-      if (uploadError) {
-        console.error('=== ERRO NO UPLOAD ===');
-        console.error('Mensagem:', uploadError.message);
-        console.error('Detalhes completos:', uploadError);
-        throw new Error(`Erro no upload: ${uploadError.message}`);
-      }
+      console.log('=== CONVERTENDO ARQUIVO PARA BASE64 ===');
       
-      console.log('=== UPLOAD CONCLUÍDO ===');
-      console.log('Dados do upload:', uploadData);
+      // Converter arquivo para base64
+      const fileBase64 = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const result = reader.result as string;
+          // Remover o prefixo data:type;base64,
+          const base64 = result.split(',')[1];
+          resolve(base64);
+        };
+        reader.onerror = () => reject(new Error('Erro ao ler arquivo'));
+        reader.readAsDataURL(receiptFile);
+      });
+      
+      console.log('Arquivo convertido para base64. Tamanho:', fileBase64.length, 'caracteres');
+      
+      // Preparar dados do arquivo para salvar no banco
+      const receiptData = {
+        filename: receiptFile.name,
+        content_type: receiptFile.type,
+        size: receiptFile.size,
+        data: fileBase64
+      };
 
-      // 2. Get public URL
-      const { data: urlData } = supabase.storage
-        .from('receipts')
-        .getPublicUrl(filePath);
-
-      if (!urlData) throw new Error('Não foi possível obter a URL do comprovante.');
-
-      const finalReceiptUrl = urlData.publicUrl;
-
+      console.log('=== SALVANDO NO BANCO DE DADOS ===');
+      
       // 3. Insert expense record into the database
       const { error: insertError } = await supabase.from('expenses').insert({
         advance_id: advanceId,
         description: data.description,
         amount: data.amount,
-        receipt_url: finalReceiptUrl,
-        user_id: (await supabase.auth.getUser()).data.user?.id,
+        receipt_filename: receiptData.filename,
+        receipt_content_type: receiptData.content_type,
+        receipt_size: receiptData.size,
+        receipt_data: receiptData.data,
+        user_id: user.id,
       });
 
       if (insertError) throw insertError;
