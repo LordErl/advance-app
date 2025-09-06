@@ -39,7 +39,12 @@ export default function ManagerDashboard() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('/api/approvals/pending', { credentials: 'include' });
+      const response = await fetch('/api/approvals/pending', { 
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || 'Failed to fetch pending approvals');
