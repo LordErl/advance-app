@@ -36,19 +36,19 @@ const NeonButton = forwardRef<HTMLButtonElement, NeonButtonProps>((
   const finalDisabled = disabled || loading;
 
   const darkVariantClasses: Record<ButtonVariant, string> = {
-    primary: 'bg-dark-primary text-white hover:bg-dark-primary/90',
-    secondary: 'border-dark-accentBlue text-dark-accentBlue hover:bg-dark-accentBlue/10',
+    primary: 'bg-dark-accentBlue text-dark-bg hover:bg-dark-accentBlue/90 royal-glow',
+    secondary: 'border-dark-accentGold text-dark-accentGold hover:bg-dark-accentGold/10 gold-glow',
     success: 'border-green-500 bg-green-500/10 text-green-400 hover:bg-green-500/20',
     danger: 'border-red-500 bg-red-500/10 text-red-400 hover:bg-red-500/20',
-    ghost: 'border-transparent text-gray-400 hover:bg-gray-700/50',
+    ghost: 'border-dark-accentBlue/30 text-dark-textSecondary hover:bg-dark-accentBlue/10',
   };
 
   const lightVariantClasses: Record<ButtonVariant, string> = {
-    primary: 'bg-light-primary text-white text-stroke-sm hover:bg-light-primary/90',
-    secondary: 'border-light-primary text-light-primary hover:bg-light-primary/10',
+    primary: 'bg-light-primary text-white hover:bg-light-primary/90',
+    secondary: 'border-light-accentGold text-light-accentGold hover:bg-light-accentGold/10',
     success: 'border-green-600 bg-green-100 text-green-700 hover:bg-green-200/80',
     danger: 'border-red-600 bg-red-100 text-red-700 hover:bg-red-200/80',
-    ghost: 'border-transparent text-gray-500 hover:bg-gray-200',
+    ghost: 'border-light-accentBlue/30 text-light-textSecondary hover:bg-light-accentBlue/10',
   };
   
   const darkNeonClasses: Record<ButtonVariant, string> = {
