@@ -121,7 +121,7 @@ export default function Modal({
               `}>
                 {title && (
                   <h2 className={`
-                    text-xl font-semibold
+                    text-xl font-semibold text-stroke-sm
                     ${isLight ? 'text-light-textPrimary' : 'text-dark-textPrimary'}
                   `}>
                     {title}

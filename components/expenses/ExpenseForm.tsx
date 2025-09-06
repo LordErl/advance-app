@@ -50,12 +50,23 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ advanceId, onSuccess }) => {
       }
 
       // 1. Upload receipt to Supabase Storage
+      console.log('Iniciando upload do arquivo:', receiptFile.name);
+      console.log('Tamanho do arquivo:', receiptFile.size);
+      console.log('Tipo do arquivo:', receiptFile.type);
+      
       const filePath = `${advanceId}-${Date.now()}-${receiptFile.name}`;
+      console.log('Caminho do arquivo:', filePath);
+      
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from('receipts')
         .upload(filePath, receiptFile);
 
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        console.error('Erro detalhado no upload:', uploadError);
+        throw new Error(`Erro no upload: ${uploadError.message}`);
+      }
+      
+      console.log('Upload realizado com sucesso:', uploadData);
 
       // 2. Get public URL
       const { data: urlData } = supabase.storage

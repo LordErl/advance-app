@@ -52,6 +52,26 @@
     border-color: rgba(255, 255, 255, 0.1);
   }
 
+  /* Classe para textos brancos com borda preta para visibilidade */
+  .text-stroke {
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.8);
+    text-stroke: 1px rgba(0, 0, 0, 0.8);
+    text-shadow: 
+      1px 1px 0 rgba(0, 0, 0, 0.8),
+      -1px -1px 0 rgba(0, 0, 0, 0.8),
+      1px -1px 0 rgba(0, 0, 0, 0.8),
+      -1px 1px 0 rgba(0, 0, 0, 0.8);
+  }
+
+  /* Versão mais sutil para textos menores */
+  .text-stroke-sm {
+    text-shadow: 
+      0.5px 0.5px 0 rgba(0, 0, 0, 0.6),
+      -0.5px -0.5px 0 rgba(0, 0, 0, 0.6),
+      0.5px -0.5px 0 rgba(0, 0, 0, 0.6),
+      -0.5px 0.5px 0 rgba(0, 0, 0, 0.6);
+  }
+
   @keyframes float {
     0%, 100% {
       transform: translateY(0);
