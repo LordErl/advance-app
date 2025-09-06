@@ -106,13 +106,13 @@ export default function ManagerDashboard() {
           purpose,
           status,
           created_at,
-          profiles!travel_advances_user_id_fkey (
+          profiles:employee_id (
             full_name,
             avatar_url
           )
         `)
-        .eq('status', 'pending')
-        .in('user_id', memberIds)
+        .in('status', ['pending_approval'])
+        .in('employee_id', memberIds)
         .order('created_at', { ascending: false });
 
       if (advancesError) {
