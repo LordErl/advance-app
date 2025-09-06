@@ -72,7 +72,7 @@ export default function DashboardPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className={`text-3xl font-bold mb-6 ${isLight ? 'text-light-textPrimary' : 'text-dark-textPrimary text-glow'}`}>
+          <h1 className={`text-3xl font-bold mb-6 text-stroke-sm ${isLight ? 'text-gray-900' : 'text-white'}`}>
             Visão Geral
           </h1>
 
@@ -87,7 +87,7 @@ export default function DashboardPage() {
           className="mt-8"
         >
           <GlassCard className="p-6">
-            <h2 className={`text-2xl font-semibold mb-6 ${isLight ? 'text-light-textPrimary' : 'text-dark-textPrimary'}`}>
+            <h2 className={`text-2xl font-semibold mb-6 text-stroke-sm ${isLight ? 'text-gray-900' : 'text-white'}`}>
               Ações Rápidas
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

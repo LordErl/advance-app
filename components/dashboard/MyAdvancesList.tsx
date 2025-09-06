@@ -98,16 +98,16 @@ const MyAdvancesList = () => {
 
   return (
     <GlassCard className="p-6">
-      <h2 className="text-2xl font-semibold mb-4 text-dark-textPrimary">Meus Adiantamentos</h2>
+      <h2 className="text-2xl font-semibold mb-4 text-stroke-sm text-white">Meus Adiantamentos</h2>
       {advances.length === 0 ? (
-        <p className="text-dark-textSecondary">Você ainda não solicitou nenhum adiantamento.</p>
+        <p className="text-gray-300 text-stroke-sm">Você ainda não solicitou nenhum adiantamento.</p>
       ) : (
         <div className="space-y-4">
           {advances.map((advance) => (
             <div key={advance.id} className="bg-dark-bg/50 p-4 rounded-lg flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div className="flex-grow">
-                <p className="font-bold text-lg text-dark-textPrimary">{advance.purpose}</p>
-                <div className="flex items-center gap-4 text-sm text-dark-textSecondary mt-1">
+                <p className="font-bold text-lg text-white text-stroke-sm">{advance.purpose}</p>
+                <div className="flex items-center gap-4 text-sm text-gray-300 text-stroke-sm mt-1">
                   <span className="flex items-center gap-1"><BanknotesIcon className="w-4 h-4" /> R$ {advance.amount.toFixed(2)}</span>
                   <span className="flex items-center gap-1"><TagIcon className="w-4 h-4" /> {typeLabels[advance.type]}</span>
                   <span className="flex items-center gap-1"><CalendarIcon className="w-4 h-4" /> {new Date(advance.created_at).toLocaleDateString()}</span>
