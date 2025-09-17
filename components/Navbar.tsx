@@ -4,22 +4,41 @@ import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { ThemeSwitcher } from './ThemeSwitcher';
 import { motion } from 'framer-motion';
+import { Zap, Menu } from 'lucide-react';
 
 export default function Navbar() {
   const { theme } = useTheme();
+  const isLight = theme === 'light';
   
   return (
-    <header className="fixed w-full z-50 bg-white/80 dark:bg-black/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
+    <header className={`fixed w-full z-50 backdrop-blur-xl border-b transition-all duration-300 ${
+      isLight 
+        ? 'bg-light-bg/90 border-light-accentBlue/20 shadow-3d-light' 
+        : 'bg-dark-bg/90 border-dark-accentBlue/20 shadow-3d-dark'
+    }`}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         <motion.div 
-          className="flex items-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          className="flex items-center space-x-3"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <Link href="/">
-            <h1 className="text-2xl font-light tracking-tight text-text-primary-light dark:text-text-primary-dark">
-              Advance<span className="font-bold text-primary dark:text-primary-dark">App</span>
+          <Link href="/" className="flex items-center space-x-3">
+            <div className={`p-2 rounded-lg transition-all duration-300 ${
+              isLight 
+                ? 'bg-light-accentBlue/20 neon-border-cyan' 
+                : 'bg-dark-accentBlue/20 neon-border-blue-soft'
+            }`}>
+              <Zap className={`h-6 w-6 ${
+                isLight ? 'text-light-accentBlue text-glow-cyan' : 'text-dark-accentBlue'
+              }`} />
+            </div>
+            <h1 className={`text-2xl font-light tracking-tight ${
+              isLight ? 'text-readable-light' : 'text-readable-dark'
+            }`}>
+              Advance<span className={`font-bold ${
+                isLight ? 'text-glow-cyan' : 'text-dark-accentBlue'
+              }`}>App</span>
             </h1>
           </Link>
         </motion.div>
@@ -34,7 +53,11 @@ export default function Navbar() {
             >
               <Link 
                 href={`#${item.toLowerCase()}`} 
-                className="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark transition-colors hover:text-primary dark:hover:text-primary-dark"
+                className={`text-sm font-medium transition-all duration-300 hover:scale-105 ${
+                  isLight 
+                    ? 'text-readable-light hover:text-glow-cyan' 
+                    : 'text-readable-dark hover:text-dark-accentBlue'
+                }`}
               >
                 {item}
               </Link>
@@ -44,12 +67,14 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
             <Link
               href="/dashboard"
-              className="text-sm font-medium px-5 py-2.5 rounded-md transition-colors bg-light-accent-primary text-white hover:bg-blue-700 dark:bg-dark-accent-primary dark:text-dark-text dark:hover:bg-cyan-400"
+              className={`text-sm font-medium px-5 py-2.5 rounded-lg transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 ${
+                isLight 
+                  ? 'bg-light-primary text-readable-light shadow-neon-cyan btn-3d-light'
+                  : 'bg-dark-primary text-readable-dark shadow-neon-blue-soft btn-3d-dark'
+              }`}
             >
               Dashboard
             </Link>
@@ -58,10 +83,12 @@ export default function Navbar() {
         
         <div className="flex items-center space-x-4">
           <ThemeSwitcher />
-          <button className="md:hidden text-text-primary-light dark:text-text-primary-dark">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-            </svg>
+          <button className={`md:hidden p-2 rounded-lg transition-all duration-300 ${
+            isLight 
+              ? 'text-readable-light hover:bg-light-accentBlue/20 neon-border-cyan' 
+              : 'text-readable-dark hover:bg-dark-accentBlue/20 neon-border-blue-soft'
+          }`}>
+            <Menu className="h-6 w-6" />
           </button>
         </div>
       </div>

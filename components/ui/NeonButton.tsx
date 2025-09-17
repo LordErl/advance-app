@@ -6,9 +6,8 @@ import LoadingSpinner from './LoadingSpinner';
 import { motion, MotionProps } from 'framer-motion';
 import { useTheme } from '@/providers/ThemeProvider';
 
-type ButtonVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'ghost';
+type ButtonVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'ghost' | 'neon-cyan' | 'neon-magenta' | 'neon-lime' | 'neon-gold';
 
-// Combine MotionProps with standard HTML button props for type safety
 type NeonButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, keyof MotionProps> & MotionProps & {
   children: ReactNode;
   variant?: ButtonVariant;
@@ -16,6 +15,7 @@ type NeonButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, keyof
   fullWidth?: boolean;
   loading?: boolean;
   className?: string;
+  effect3d?: boolean;
 };
 
 const NeonButton = forwardRef<HTMLButtonElement, NeonButtonProps>((
@@ -27,6 +27,7 @@ const NeonButton = forwardRef<HTMLButtonElement, NeonButtonProps>((
     loading = false,
     className = '',
     disabled,
+    effect3d = true,
     ...props
   },
   ref
@@ -35,39 +36,31 @@ const NeonButton = forwardRef<HTMLButtonElement, NeonButtonProps>((
   const isLight = theme === 'light';
   const finalDisabled = disabled || loading;
 
-  const darkVariantClasses: Record<ButtonVariant, string> = {
-    primary: 'bg-dark-accentBlue text-dark-bg hover:bg-dark-accentBlue/90 royal-glow',
-    secondary: 'border-dark-accentGold text-dark-accentGold hover:bg-dark-accentGold/10 gold-glow',
-    success: 'border-green-500 bg-green-500/10 text-green-400 hover:bg-green-500/20',
-    danger: 'border-red-500 bg-red-500/10 text-red-400 hover:bg-red-500/20',
-    ghost: 'border-dark-accentBlue/30 text-dark-textSecondary hover:bg-dark-accentBlue/10',
-  };
-
   const lightVariantClasses: Record<ButtonVariant, string> = {
-    primary: 'bg-light-primary text-white hover:bg-light-primary/90',
-    secondary: 'border-light-accentGold text-light-accentGold hover:bg-light-accentGold/10',
-    success: 'border-green-600 bg-green-100 text-green-700 hover:bg-green-200/80',
+    primary: 'bg-light-primary text-light-textPrimary hover:bg-light-accentBlue shadow-neon-cyan',
+    secondary: 'border-light-accentGold text-light-accentGold hover:bg-light-accentGold/20 shadow-neon-gold',
+    success: 'border-light-accentLime text-light-accentLime hover:bg-light-accentLime/20 shadow-neon-lime',
+    danger: 'border-red-500 bg-red-500/20 text-red-400 hover:bg-red-500/30',
+    ghost: 'border-light-accentBlue/30 text-light-textSecondary hover:bg-light-accentBlue/20',
+    'neon-cyan': 'bg-transparent border-light-accentBlue text-light-accentBlue hover:bg-light-accentBlue/10 shadow-neon-cyan text-glow-cyan',
+    'neon-magenta': 'bg-transparent border-light-accentMagenta text-light-accentMagenta hover:bg-light-accentMagenta/10 shadow-neon-magenta text-glow-magenta',
+    'neon-lime': 'bg-transparent border-light-accentLime text-light-accentLime hover:bg-light-accentLime/10 shadow-neon-lime text-glow-lime',
+    'neon-gold': 'bg-transparent border-light-accentGold text-light-accentGold hover:bg-light-accentGold/10 shadow-neon-gold text-glow-gold',
+  };
+
+  const darkVariantClasses: Record<ButtonVariant, string> = {
+    primary: 'bg-dark-primary text-dark-textPrimary hover:bg-dark-accentBlue shadow-neon-blue-soft',
+    secondary: 'border-dark-accentGold text-dark-accentGold hover:bg-dark-accentGold/20 shadow-neon-gold-soft',
+    success: 'border-dark-accentLime text-dark-accentLime hover:bg-dark-accentLime/20 shadow-neon-lime-soft',
     danger: 'border-red-600 bg-red-100 text-red-700 hover:bg-red-200/80',
-    ghost: 'border-light-accentBlue/30 text-light-textSecondary hover:bg-light-accentBlue/10',
-  };
-  
-  const darkNeonClasses: Record<ButtonVariant, string> = {
-    primary: 'shadow-[0_0_15px_rgba(59,130,246,0.5)]',
-    secondary: 'shadow-[0_0_15px_rgba(59,130,246,0.5)]',
-    success: 'shadow-[0_0_15px_rgba(34,197,94,0.5)]',
-    danger: 'shadow-[0_0_15px_rgba(239,68,68,0.5)]',
-    ghost: '',
+    ghost: 'border-dark-accentBlue/30 text-dark-textSecondary hover:bg-dark-accentBlue/20',
+    'neon-cyan': 'bg-transparent border-dark-accentBlue text-dark-accentBlue hover:bg-dark-accentBlue/10 shadow-neon-blue-soft',
+    'neon-magenta': 'bg-transparent border-dark-accentMagenta text-dark-accentMagenta hover:bg-dark-accentMagenta/10 shadow-neon-magenta-soft',
+    'neon-lime': 'bg-transparent border-dark-accentLime text-dark-accentLime hover:bg-dark-accentLime/10 shadow-neon-lime-soft',
+    'neon-gold': 'bg-transparent border-dark-accentGold text-dark-accentGold hover:bg-dark-accentGold/10 shadow-neon-gold-soft',
   };
 
-  const lightNeonClasses: Record<ButtonVariant, string> = {
-    primary: 'shadow-[0_0_15px_rgba(0,119,255,0.6)]',
-    secondary: 'shadow-[0_0_15px_rgba(0,119,255,0.5)]',
-    success: 'shadow-[0_0_15px_rgba(22,163,74,0.5)]',
-    danger: 'shadow-[0_0_15px_rgba(220,38,38,0.5)]',
-    ghost: '',
-  };
-
-  const baseClasses = 'relative inline-flex items-center justify-center rounded-lg border font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent';
+  const baseClasses = 'relative inline-flex items-center justify-center rounded-lg border font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent transform perspective-container';
 
   const sizeClasses = {
     sm: 'px-3 py-1.5 text-xs',
@@ -75,17 +68,23 @@ const NeonButton = forwardRef<HTMLButtonElement, NeonButtonProps>((
     lg: 'px-6 py-3 text-base',
   };
 
+  const effect3dClasses = effect3d 
+    ? (isLight ? 'btn-3d-light' : 'btn-3d-dark')
+    : '';
+
   const variantClasses = isLight ? lightVariantClasses[variant] : darkVariantClasses[variant];
-  const neonClasses = !finalDisabled ? (isLight ? lightNeonClasses[variant] : darkNeonClasses[variant]) : '';
+  const textReadabilityClass = isLight ? 'text-readable-light' : 'text-readable-dark';
 
   const buttonClasses = twMerge(
     baseClasses,
     sizeClasses[size],
     variantClasses,
+    effect3dClasses,
     fullWidth && 'w-full',
     finalDisabled && 'opacity-50 cursor-not-allowed',
     loading && 'animate-pulse',
-    neonClasses,
+    // High contrast text for readability
+    (variant.includes('neon') || variant === 'primary') ? '' : textReadabilityClass,
     className
   );
 
@@ -93,8 +92,14 @@ const NeonButton = forwardRef<HTMLButtonElement, NeonButtonProps>((
     <motion.button
       ref={ref}
       {...props}
-      whileHover={{ scale: finalDisabled ? 1 : 1.03 }}
-      whileTap={{ scale: finalDisabled ? 1 : 0.98 }}
+      whileHover={{ 
+        scale: finalDisabled ? 1 : 1.03,
+        y: finalDisabled ? 0 : (effect3d ? -2 : -1),
+      }}
+      whileTap={{ 
+        scale: finalDisabled ? 1 : 0.98,
+        y: finalDisabled ? 0 : 0,
+      }}
       className={buttonClasses}
       disabled={finalDisabled}
     >
@@ -107,5 +112,3 @@ const NeonButton = forwardRef<HTMLButtonElement, NeonButtonProps>((
 NeonButton.displayName = 'NeonButton';
 
 export default NeonButton;
-
-
