@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import { BarChart3, Zap, FileSpreadsheet, Sparkles } from 'lucide-react';
 import GlassCard from './ui/GlassCard';
