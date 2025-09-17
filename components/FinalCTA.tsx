@@ -1,3 +1,5 @@
+'use client';
+
 import { ArrowRight, Sparkles, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
 import GlassCard from './ui/GlassCard';
