@@ -1,3 +1,5 @@
+'use client';
+
 import HeroScreenshot from '@/components/HeroScreenshot';
 import BackgroundCarousel from '@/components/BackgroundCarousel';
 import Features from '@/components/Features';
