@@ -5,15 +5,15 @@
 :root {
   /* Enhanced light theme - darker colors for better contrast */
   --background-light: #0F1419;
-  --text-light: #F7FAFC;
-  --text-secondary-light: #E2E8F0;
-  --text-tertiary-light: #CBD5E0;
+  --text-light: #000000;
+  --text-secondary-light: #1A1A1A;
+  --text-tertiary-light: #333333;
 
-  /* Enhanced dark theme - lighter colors for better contrast */
+  /* Enhanced dark theme - darker colors for better contrast */
   --background-dark: #FFFFFF;
-  --text-dark: #1A202C;
-  --text-secondary-dark: #2D3748;
-  --text-tertiary-dark: #4A5568;
+  --text-dark: #000000;
+  --text-secondary-dark: #1A1A1A;
+  --text-tertiary-dark: #333333;
 }
 
 @layer base {
@@ -45,51 +45,53 @@
 
   /* High contrast text classes for maximum readability */
   .text-readable-light {
-    color: #F7FAFC;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    color: #000000;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.9);
+    font-weight: 600;
   }
 
   .text-readable-dark {
-    color: #1A202C;
-    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+    color: #000000;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.9);
+    font-weight: 600;
   }
 }
 
 @layer utilities {
-  /* Enhanced neon text effects */
+  /* Enhanced neon text effects - 50% reduced intensity */
   .text-glow {
     text-shadow:
+      0 0 2.5px currentColor,
       0 0 5px currentColor,
       0 0 10px currentColor,
-      0 0 20px currentColor,
-      0 0 40px currentColor;
+      0 0 20px currentColor;
   }
 
   .text-glow-strong {
     text-shadow:
-      0 0 5px currentColor,
-      0 0 10px currentColor,
-      0 0 20px currentColor,
-      0 0 40px currentColor,
-      0 0 80px currentColor;
-  }
-
-  /* Enhanced neon box effects */
-  .neon-box {
-    box-shadow:
+      0 0 2.5px currentColor,
       0 0 5px currentColor,
       0 0 10px currentColor,
       0 0 20px currentColor,
       0 0 40px currentColor;
   }
 
+  /* Enhanced neon box effects - 50% reduced intensity */
+  .neon-box {
+    box-shadow:
+      0 0 2.5px currentColor,
+      0 0 5px currentColor,
+      0 0 10px currentColor,
+      0 0 20px currentColor;
+  }
+
   .neon-box-strong {
     box-shadow:
+      0 0 2.5px currentColor,
       0 0 5px currentColor,
       0 0 10px currentColor,
       0 0 20px currentColor,
-      0 0 40px currentColor,
-      0 0 80px currentColor;
+      0 0 40px currentColor;
   }
 
   /* Enhanced glassmorphism with 3D effects */

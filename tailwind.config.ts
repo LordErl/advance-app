@@ -22,9 +22,9 @@ const config: Config = {
         'light-bg-gradient-end': '#2D3748',
         'light-cardBg': 'rgba(26, 32, 44, 0.95)', // Dark with high opacity
         'light-cardBg-secondary': 'rgba(45, 55, 72, 0.90)',
-        'light-textPrimary': '#F7FAFC', // Pure white for maximum contrast
-        'light-textSecondary': '#E2E8F0', // Light gray for secondary text
-        'light-textTertiary': '#CBD5E0', // Medium gray for tertiary text
+        'light-textPrimary': '#000000', // Pure black for maximum contrast
+        'light-textSecondary': '#1A1A1A', // Dark gray for secondary text
+        'light-textTertiary': '#333333', // Medium gray for tertiary text
         'light-primary': '#00F5FF', // Electric cyan
         'light-accentBlue': '#0FF0FC', // Bright cyan
         'light-accentGold': '#FFD700', // Bright gold
@@ -38,9 +38,9 @@ const config: Config = {
         'dark-bg-gradient-end': '#F1F3F4',
         'dark-cardBg': 'rgba(255, 255, 255, 0.95)', // White with high opacity
         'dark-cardBg-secondary': 'rgba(248, 249, 250, 0.90)',
-        'dark-textPrimary': '#1A202C', // Deep charcoal for maximum contrast
-        'dark-textSecondary': '#2D3748', // Dark gray for secondary text
-        'dark-textTertiary': '#4A5568', // Medium gray for tertiary text
+        'dark-textPrimary': '#000000', // Pure black for maximum contrast
+        'dark-textSecondary': '#1A1A1A', // Dark gray for secondary text
+        'dark-textTertiary': '#333333', // Medium gray for tertiary text
         'dark-accentBlue': '#0066FF', // Deep blue neon
         'dark-accentGold': '#FF8C00', // Deep orange-gold
         'dark-accentMagenta': '#CC00CC', // Deep magenta
@@ -104,17 +104,17 @@ const config: Config = {
           inset 0 1px 2px rgba(0, 0, 0, 0.08)
         `,
         
-        // Enhanced neon glows
-        'neon-cyan': '0 0 5px #00F5FF, 0 0 10px #00F5FF, 0 0 20px #00F5FF, 0 0 40px #00F5FF',
-        'neon-magenta': '0 0 5px #FF10F0, 0 0 10px #FF10F0, 0 0 20px #FF10F0, 0 0 40px #FF10F0',
-        'neon-lime': '0 0 5px #32FF32, 0 0 10px #32FF32, 0 0 20px #32FF32, 0 0 40px #32FF32',
-        'neon-gold': '0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 40px #FFD700',
+        // Enhanced neon glows - 50% reduced intensity
+        'neon-cyan': '0 0 2.5px #00F5FF, 0 0 5px #00F5FF, 0 0 10px #00F5FF, 0 0 20px #00F5FF',
+        'neon-magenta': '0 0 2.5px #FF10F0, 0 0 5px #FF10F0, 0 0 10px #FF10F0, 0 0 20px #FF10F0',
+        'neon-lime': '0 0 2.5px #32FF32, 0 0 5px #32FF32, 0 0 10px #32FF32, 0 0 20px #32FF32',
+        'neon-gold': '0 0 2.5px #FFD700, 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 20px #FFD700',
         
-        // Soft neon for dark theme
-        'neon-blue-soft': '0 0 5px #0066FF, 0 0 10px #0066FF, 0 0 15px #0066FF',
-        'neon-magenta-soft': '0 0 5px #CC00CC, 0 0 10px #CC00CC, 0 0 15px #CC00CC',
-        'neon-lime-soft': '0 0 5px #00AA00, 0 0 10px #00AA00, 0 0 15px #00AA00',
-        'neon-gold-soft': '0 0 5px #FF8C00, 0 0 10px #FF8C00, 0 0 15px #FF8C00',
+        // Soft neon for dark theme - 50% reduced intensity
+        'neon-blue-soft': '0 0 2.5px #0066FF, 0 0 5px #0066FF, 0 0 7.5px #0066FF',
+        'neon-magenta-soft': '0 0 2.5px #CC00CC, 0 0 5px #CC00CC, 0 0 7.5px #CC00CC',
+        'neon-lime-soft': '0 0 2.5px #00AA00, 0 0 5px #00AA00, 0 0 7.5px #00AA00',
+        'neon-gold-soft': '0 0 2.5px #FF8C00, 0 0 5px #FF8C00, 0 0 7.5px #FF8C00',
       },
       borderRadius: {
         'xl': '0.75rem',
@@ -280,31 +280,31 @@ const config: Config = {
           backfaceVisibility: 'hidden',
         },
         
-        // Enhanced neon borders
+        // Enhanced neon borders - 50% reduced intensity
         '.neon-border-cyan': {
-          boxShadow: '0 0 5px #00F5FF, 0 0 10px #00F5FF, 0 0 15px #00F5FF',
+          boxShadow: '0 0 2.5px #00F5FF, 0 0 5px #00F5FF, 0 0 7.5px #00F5FF',
           border: '1px solid #00F5FF',
         },
         '.neon-border-magenta': {
-          boxShadow: '0 0 5px #FF10F0, 0 0 10px #FF10F0, 0 0 15px #FF10F0',
+          boxShadow: '0 0 2.5px #FF10F0, 0 0 5px #FF10F0, 0 0 7.5px #FF10F0',
           border: '1px solid #FF10F0',
         },
         '.neon-border-lime': {
-          boxShadow: '0 0 5px #32FF32, 0 0 10px #32FF32, 0 0 15px #32FF32',
+          boxShadow: '0 0 2.5px #32FF32, 0 0 5px #32FF32, 0 0 7.5px #32FF32',
           border: '1px solid #32FF32',
         },
         '.neon-border-gold': {
-          boxShadow: '0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFD700',
+          boxShadow: '0 0 2.5px #FFD700, 0 0 5px #FFD700, 0 0 7.5px #FFD700',
           border: '1px solid #FFD700',
         },
         
-        // Soft neon for dark theme
+        // Soft neon for dark theme - 50% reduced intensity
         '.neon-border-blue-soft': {
-          boxShadow: '0 0 3px #0066FF, 0 0 6px #0066FF, 0 0 9px #0066FF',
+          boxShadow: '0 0 1.5px #0066FF, 0 0 3px #0066FF, 0 0 4.5px #0066FF',
           border: '1px solid #0066FF',
         },
         '.neon-border-magenta-soft': {
-          boxShadow: '0 0 3px #CC00CC, 0 0 6px #CC00CC, 0 0 9px #CC00CC',
+          boxShadow: '0 0 1.5px #CC00CC, 0 0 3px #CC00CC, 0 0 4.5px #CC00CC',
           border: '1px solid #CC00CC',
         },
         
